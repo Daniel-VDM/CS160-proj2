@@ -3,9 +3,15 @@ package com.example.proj;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.PorterDuff;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -13,6 +19,9 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.io.IOException;
+import java.util.List;
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -40,7 +49,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         map.getMapAsync(this);
     }
 
-    private void processIntent(){
+    private void processIntent() {
         Intent intent = getIntent();
         carSelected = intent.getStringExtra("CAR");
         zipcode = intent.getStringExtra("TARGET_ZIP");
@@ -48,8 +57,23 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         double lat = intent.getDoubleExtra("CURR_LAT", 0);
         currLoc = new LatLng(lat, lng);
 
-        // TODO: handle logic for looking things up based on zipcode (get zip here!!!)
-        lookLoc = currLoc;
+        if (zipcode.equals("")){
+            lookLoc = currLoc;
+        } else {
+            Geocoder geocoder = new Geocoder(this);
+            try {
+                List<Address> addrl = geocoder.getFromLocationName(zipcode, 1);
+                Address addr = addrl.get(0);
+                lookLoc = new LatLng(addr.getLatitude(), addr.getLongitude());
+            } catch (IOException | IndexOutOfBoundsException e) {
+                Toast toast = Toast.makeText(getApplicationContext(),
+                        "Unknown zip code: " + zipcode,
+                        Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.BOTTOM, 0, 50);
+                toast.show();
+                lookLoc = currLoc;
+            }
+        }
     }
 
     @Override
