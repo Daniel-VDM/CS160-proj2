@@ -52,6 +52,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     String zipcode;
     Button searchButton;
     EditText zipcodeInput;
+    Geocoder geocoder;
     MapView map;
     private GoogleMap googleMap;
 
@@ -63,13 +64,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
+        geocoder = new Geocoder(this);
         map = findViewById(R.id.map);
         searchButton = findViewById(R.id.maps_searchButton);
         zipcodeInput = findViewById(R.id.maps_zipcode);
         map.onCreate(savedInstanceState);
 
         processIntent();
-
         update();
     }
 
@@ -80,11 +81,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         double lng = intent.getDoubleExtra("CURR_LONG", 0);
         double lat = intent.getDoubleExtra("CURR_LAT", 0);
         currLoc = new LatLng(lat, lng);
+    }
 
+    private void update(){
         if (zipcode.equals("")){
             lookLoc = currLoc;
         } else {
-            Geocoder geocoder = new Geocoder(this);
             try {
                 List<Address> addrl = geocoder.getFromLocationName(zipcode, 1);
                 Address addr = addrl.get(0);
@@ -98,9 +100,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 lookLoc = currLoc;
             }
         }
-    }
-
-    private void update(){
         updateLocations();
         map.getMapAsync(this);
     }
@@ -141,7 +140,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 "maps/api/place/nearbysearch/json?")
                 .append("location=").append(lookLoc.latitude).append(",").append(lookLoc.longitude)
                 .append("&radius=80467.2") // 50 miles in meters.
-                .append("&keyword=electric%20vehicle%20charging%20points")
+                .append("&keyword=charge")
                 .append("&key=").append(key);
         String response = read(googlePlacesUrl.toString());
         try {
