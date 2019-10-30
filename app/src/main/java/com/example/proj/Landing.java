@@ -5,8 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
-import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -26,18 +24,14 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.nabinbhandari.android.permissions.PermissionHandler;
 import com.nabinbhandari.android.permissions.Permissions;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
 
 public class Landing extends AppCompatActivity implements OnMapReadyCallback {
 
-    Button searchBuitton;
+    Button searchBuotton;
     MapView landingMap;
     EditText zipcodeInput;
     RadioButton model3;
@@ -54,7 +48,7 @@ public class Landing extends AppCompatActivity implements OnMapReadyCallback {
         setContentView(R.layout.activity_landing);
         carSelected = null;
 
-        searchBuitton = findViewById(R.id.searchButton);
+        searchBuotton = findViewById(R.id.searchButton);
         landingMap = findViewById(R.id.landing_mapView);
         zipcodeInput = findViewById(R.id.landing_zipcodeInput);
         model3 = findViewById(R.id.landing_model3Sel);
@@ -101,7 +95,7 @@ public class Landing extends AppCompatActivity implements OnMapReadyCallback {
     }
 
     private void setListeners() {
-        searchBuitton.setOnClickListener(new View.OnClickListener() {
+        searchBuotton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (carSelected == null){
@@ -111,8 +105,12 @@ public class Landing extends AppCompatActivity implements OnMapReadyCallback {
                     toast.setGravity(Gravity.TOP, 0, 25);
                     toast.show();
                 } else {
-                    // TODO: Serialize all relevent info
                     Intent mapActivity = new Intent(Landing.this, MapsActivity.class);
+                    String zipCode = zipcodeInput.getText().toString();
+                    mapActivity.putExtra("CAR", carSelected);
+                    mapActivity.putExtra("CURR_LONG", currLoc.longitude);
+                    mapActivity.putExtra("CURR_LAT", currLoc.latitude);
+                    mapActivity.putExtra("TARGET_ZIP", zipCode);
                     startActivity(mapActivity);
                 }
             }
