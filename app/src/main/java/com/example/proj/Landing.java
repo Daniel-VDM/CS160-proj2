@@ -5,8 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
+import android.provider.CalendarContract;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -110,6 +112,12 @@ public class Landing extends AppCompatActivity implements OnMapReadyCallback {
                     toast.setGravity(Gravity.TOP, 0, 25);
                     toast.show();
                 } else {
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            "Searching for charging stations!",
+                            Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.BOTTOM, 0, 100);
+                    toast.show();
+                    searchBuotton.setAlpha(0.0f);
                     Intent mapActivity = new Intent(Landing.this, MapsActivity.class);
                     String zipCode = zipcodeInput.getText().toString();
                     mapActivity.putExtra("CAR", carSelected);

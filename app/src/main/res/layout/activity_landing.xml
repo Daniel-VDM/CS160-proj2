@@ -163,6 +163,7 @@
         android:contentDescription="@android:string/defaultMsisdnAlphaTag"
         android:ems="10"
         android:hint="(Optional) We'll use your location if empty"
+        android:maxLines="1"
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -216,4 +217,5 @@
         app:layout_constraintStart_toStartOf="@+id/landing_i3Sel"
         app:layout_constraintTop_toTopOf="@+id/landing_i3Sel"
         app:srcCompat="@drawable/i3" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

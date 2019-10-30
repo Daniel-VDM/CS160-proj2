@@ -39,6 +39,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -171,7 +172,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         "maps/api/place/nearbysearch/json?")
                         .append("pagetoken=").append(nextPageToken)
                         .append("&key=").append(key);
-                jsonObject = new JSONObject(read(googlePlacesUrl.toString()));
+                response = read(googlePlacesUrl.toString());
+                jsonObject = new JSONObject(response);
+                while (jsonObject.getString("status").equals("INVALID_REQUEST")){
+                    response = read(googlePlacesUrl.toString());
+                    jsonObject = new JSONObject(response);
+                }
             }
             JSONArray results = (JSONArray) jsonObject.get("results");
             for (int i = 0; i < results.length(); i++){

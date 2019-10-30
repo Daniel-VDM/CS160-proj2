@@ -47,6 +47,7 @@
         android:layout_height="41dp"
         android:ems="10"
         android:hint="    Search by Area"
+        android:maxLines="1"
         android:textColor="@color/colorPrimaryDark"
         android:textColorHint="@color/colorPrimaryDark"
         app:layout_constraintBottom_toBottomOf="@+id/imageView4"
