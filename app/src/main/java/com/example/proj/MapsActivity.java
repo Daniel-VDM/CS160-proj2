@@ -3,6 +3,9 @@ package com.example.proj;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
@@ -17,6 +20,9 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -60,12 +66,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         map = findViewById(R.id.map);
         searchButton = findViewById(R.id.maps_searchButton);
         zipcodeInput = findViewById(R.id.maps_zipcode);
+        map.onCreate(savedInstanceState);
 
         processIntent();
 
-        updateLocations();
-        map.onCreate(savedInstanceState);
-        map.getMapAsync(this);
+        update();
     }
 
     private void processIntent() {
@@ -86,7 +91,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 lookLoc = new LatLng(addr.getLatitude(), addr.getLongitude());
             } catch (IOException | IndexOutOfBoundsException e) {
                 Toast toast = Toast.makeText(getApplicationContext(),
-                        "Unknown zip code: " + zipcode,
+                        "Unknown Area: " + zipcode,
                         Toast.LENGTH_LONG);
                 toast.setGravity(Gravity.BOTTOM, 0, 50);
                 toast.show();
@@ -97,7 +102,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private void update(){
         updateLocations();
-        updateMap();
+        map.getMapAsync(this);
     }
 
     private String read(String httpUrl) {
@@ -192,12 +197,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
     }
 
-    private void updateMap(){
-        googleMap.clear();
-        googleMap.addMarker(new MarkerOptions().position(currLoc).title("You are here!"));
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(lookLoc));
-    }
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -238,7 +237,37 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onMapReady(GoogleMap googleMap) {
         this.googleMap = googleMap;
         googleMap.setMinZoomPreference(12);
-        updateMap();
+        googleMap.clear();
+        googleMap.addMarker(new MarkerOptions()
+                .position(currLoc)
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
+                .title("You are here!"));
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(lookLoc));
+
+        for(int i = 0; i < currStations.length(); i++){
+            try {
+                JSONObject station = (JSONObject) currStations.get(i);
+                JSONObject geo = (JSONObject) station.get("geometry");
+                JSONObject location = (JSONObject) geo.get("location");
+                double lat = (double) location.get("lat");
+                double lng = (double) location.get("lng");
+                String name = "Charging Station";
+                if (station.has("name")){
+                    name = station.getString("name");
+                }
+                URL url = new URL("https://map.openchargemap.io/assets/images/icons/branding/AppIcon_128x128.png");
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setDoInput(true);
+                connection.connect();
+                InputStream input = connection.getInputStream();
+                Bitmap myBitmap = BitmapFactory.decodeStream(input);
+                googleMap.addMarker(new MarkerOptions()
+                        .position(new LatLng(lat, lng))
+                        .icon(BitmapDescriptorFactory.fromBitmap(myBitmap))
+                        .title(name));
+            } catch (JSONException | IOException ignored) {
+            }
+        }
     }
 
 }

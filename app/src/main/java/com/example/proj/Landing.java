@@ -21,6 +21,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -87,7 +88,11 @@ public class Landing extends AppCompatActivity implements OnMapReadyCallback {
                         if (location != null) {
                             currLoc = new LatLng(location.getLatitude(), location.getLongitude());
                             googleMap.setMinZoomPreference(13);
-                            googleMap.addMarker(new MarkerOptions().position(currLoc).title("You are here!"));
+                            googleMap.addMarker(new MarkerOptions()
+                                    .position(currLoc)
+                                    .icon(BitmapDescriptorFactory
+                                            .defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
+                                    .title("You are here!"));
                             googleMap.moveCamera(CameraUpdateFactory.newLatLng(currLoc));
                         }
                     }
@@ -190,7 +195,10 @@ public class Landing extends AppCompatActivity implements OnMapReadyCallback {
     public void onMapReady(GoogleMap googleMap) {
         this.googleMap = googleMap;
         googleMap.setMinZoomPreference(15);
-        googleMap.addMarker(new MarkerOptions().position(currLoc).title("You are here!"));
+        googleMap.addMarker(new MarkerOptions()
+                .position(currLoc)
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
+                .title("You are here!"));
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(currLoc));
     }
 }
