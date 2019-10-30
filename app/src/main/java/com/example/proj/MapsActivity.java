@@ -3,12 +3,12 @@ package com.example.proj;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.graphics.PorterDuff;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
+import android.os.StrictMode;
+import android.util.Log;
 import android.view.Gravity;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -20,10 +20,25 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.List;
+import java.util.Objects;
+import java.util.Random;
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
+
+    String key = "AIzaSyCtNO_y0trt6tjgP8ApsdGIm1IK4rjZFeQ";
+
+    JSONArray currStations;
 
     LatLng currLoc;
     LatLng lookLoc;
@@ -38,6 +53,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+        // HACKMODE...
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
 
         map = findViewById(R.id.map);
         searchButton = findViewById(R.id.maps_searchButton);
@@ -45,6 +63,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         processIntent();
 
+        updateLocations();
         map.onCreate(savedInstanceState);
         map.getMapAsync(this);
     }
@@ -74,6 +93,109 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 lookLoc = currLoc;
             }
         }
+    }
+
+    private void update(){
+        updateLocations();
+        updateMap();
+    }
+
+    private String read(String httpUrl) {
+        String httpData = "";
+        InputStream stream = null;
+        HttpURLConnection urlConnection = null;
+        try {
+            URL url = new URL(httpUrl);
+            urlConnection = (HttpURLConnection) url.openConnection();
+            urlConnection.connect();
+            stream = urlConnection.getInputStream();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+            StringBuffer buf = new StringBuffer();
+            String line = "";
+            while ((line = reader.readLine()) != null) {
+                buf.append(line);
+            }
+            httpData = buf.toString();
+            reader.close();
+        } catch (Exception e) {
+            Log.e("HttpRequestHandler", Objects.requireNonNull(e.getMessage()));
+        } finally {
+            try {
+                assert stream != null;
+                stream.close();
+                urlConnection.disconnect();
+            } catch (Exception e) {
+                Log.e("HttpRequestHandler", Objects.requireNonNull(e.getMessage()));
+            }
+        }
+        return httpData;
+    }
+
+    private void updateLocations(){
+        StringBuilder googlePlacesUrl = new StringBuilder("https://maps.googleapis.com/" +
+                "maps/api/place/nearbysearch/json?")
+                .append("location=").append(lookLoc.latitude).append(",").append(lookLoc.longitude)
+                .append("&radius=80467.2") // 50 miles in meters.
+                .append("&keyword=electric%20vehicle%20charging%20points")
+                .append("&key=").append(key);
+        String response = read(googlePlacesUrl.toString());
+        try {
+            JSONObject jsonObject = new JSONObject(response);
+            Random r = new Random();
+            currStations = new JSONArray();
+            while (jsonObject.has("next_page_token")){
+                String nextPageToken = (String) jsonObject.get("next_page_token");
+                JSONArray results = (JSONArray) jsonObject.get("results");
+                for (int i = 0; i < results.length(); i++){
+                    // Add data for each station here
+                    JSONObject station = (JSONObject)results.get(i);
+                    double pricePerKwh = 0.08 + (0.16-0.08) * r.nextDouble();
+                    station.put("price-per-kWh", pricePerKwh);
+                    if(station.has("name")
+                            && station.get("name").toString().contains("Tesla")){
+                        station.put("range-per-hr-model3", 200);
+                        station.put("range-per-hr-modelS", 160);
+                        station.put("range-per-hr-i3", 216);
+                    } else {
+                        station.put("range-per-hr-model3", 45);
+                        station.put("range-per-hr-modelS", 55);
+                        station.put("range-per-hr-i3", 48);
+                    }
+                    currStations.put(station);
+                }
+                googlePlacesUrl = new StringBuilder("https://maps.googleapis.com/" +
+                        "maps/api/place/nearbysearch/json?")
+                        .append("pagetoken=").append(nextPageToken)
+                        .append("&key=").append(key);
+                jsonObject = new JSONObject(read(googlePlacesUrl.toString()));
+            }
+            JSONArray results = (JSONArray) jsonObject.get("results");
+            for (int i = 0; i < results.length(); i++){
+                // Add data for each station here
+                JSONObject station = (JSONObject)results.get(i);
+                double pricePerKwh = 0.08 + (0.16-0.08) * r.nextDouble();
+                station.put("price-per-kWh", pricePerKwh);
+                if(station.has("name")
+                        && station.get("name").toString().contains("Tesla")){
+                    station.put("range-per-hr-model3", 200);
+                    station.put("range-per-hr-modelS", 160);
+                    station.put("range-per-hr-i3", 216);
+                } else {
+                    station.put("range-per-hr-model3", 45);
+                    station.put("range-per-hr-modelS", 55);
+                    station.put("range-per-hr-i3", 48);
+                }
+                currStations.put(station);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void updateMap(){
+        googleMap.clear();
+        googleMap.addMarker(new MarkerOptions().position(currLoc).title("You are here!"));
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(lookLoc));
     }
 
     @Override
@@ -116,8 +238,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onMapReady(GoogleMap googleMap) {
         this.googleMap = googleMap;
         googleMap.setMinZoomPreference(12);
-        googleMap.addMarker(new MarkerOptions().position(currLoc).title("You are here!"));
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(lookLoc));
+        updateMap();
     }
 
 }
