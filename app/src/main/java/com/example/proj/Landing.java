@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -18,7 +19,7 @@ public class Landing extends AppCompatActivity implements OnMapReadyCallback {
 
     Button searchBuitton;
     MapView landingMap;
-    private GoogleMap gmap;
+    EditText zipcodeInput;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +28,7 @@ public class Landing extends AppCompatActivity implements OnMapReadyCallback {
 
         searchBuitton = findViewById(R.id.searchButton);
         landingMap = findViewById(R.id.landing_mapView);
+        zipcodeInput = findViewById(R.id.landing_zipcodeInput);
 
         searchBuitton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,10 +78,9 @@ public class Landing extends AppCompatActivity implements OnMapReadyCallback {
     }
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        gmap = googleMap;
-        gmap.setMinZoomPreference(12);
+        googleMap.setMinZoomPreference(15);
         LatLng ny = new LatLng(40.7143528, -74.0059731);
-        gmap.addMarker(new MarkerOptions().position(ny).title("You are here!"));
-        gmap.moveCamera(CameraUpdateFactory.newLatLng(ny));
+        googleMap.addMarker(new MarkerOptions().position(ny).title("You are here!"));
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(ny));
     }
 }
