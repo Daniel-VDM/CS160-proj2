@@ -17,6 +17,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     LatLng currLoc;
+    LatLng lookLoc;
     String carSelected;
     String zipcode;
     Button searchButton;
@@ -45,9 +46,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         zipcode = intent.getStringExtra("TARGET_ZIP");
         double lng = intent.getDoubleExtra("CURR_LONG", 0);
         double lat = intent.getDoubleExtra("CURR_LAT", 0);
+        currLoc = new LatLng(lat, lng);
 
         // TODO: handle logic for looking things up based on zipcode (get zip here!!!)
-        currLoc = new LatLng(lat, lng);
+        lookLoc = currLoc;
     }
 
     @Override
@@ -91,7 +93,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         this.googleMap = googleMap;
         googleMap.setMinZoomPreference(12);
         googleMap.addMarker(new MarkerOptions().position(currLoc).title("You are here!"));
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(currLoc));
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(lookLoc));
     }
 
 }
