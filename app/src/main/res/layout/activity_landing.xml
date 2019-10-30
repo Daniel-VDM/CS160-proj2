@@ -122,8 +122,8 @@
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="299dp"
-        android:layout_height="70dp"
+        android:layout_width="294dp"
+        android:layout_height="60dp"
         android:layout_marginTop="8dp"
         android:text="To get started, choose your car and enter the zip code (optional) of where you want to charge!"
         android:textAlignment="center"
@@ -136,11 +136,12 @@
         android:id="@+id/textView3"
         android:layout_width="160dp"
         android:layout_height="26dp"
+        android:layout_marginTop="8dp"
         android:fontFamily="sans-serif-condensed-medium"
         android:text="Current Location"
         android:textSize="22sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.191"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
@@ -148,7 +149,7 @@
         android:id="@+id/landing_mapView"
         android:layout_width="257dp"
         android:layout_height="195dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:outlineProvider="bounds"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -211,7 +212,7 @@
         android:layout_height="46dp"
         android:layout_marginStart="84dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.08"
+        app:layout_constraintHorizontal_bias="0.13"
         app:layout_constraintStart_toStartOf="@+id/landing_i3Sel"
         app:layout_constraintTop_toTopOf="@+id/landing_i3Sel"
         app:srcCompat="@drawable/i3" />
