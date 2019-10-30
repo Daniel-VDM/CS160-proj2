@@ -86,25 +86,52 @@
 
     <TextView
         android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:fontFamily="sans-serif-black"
+        android:layout_width="160dp"
+        android:layout_height="26dp"
+        android:fontFamily="sans-serif-condensed-medium"
         android:text="Current Location"
         android:textSize="22sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.195"
+        app:layout_constraintHorizontal_bias="0.191"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
     <com.google.android.gms.maps.MapView
         android:id="@+id/landing_mapView"
-        android:layout_width="190dp"
-        android:layout_height="190dp"
-        android:layout_marginTop="12dp"
+        android:layout_width="257dp"
+        android:layout_height="195dp"
+        android:layout_marginTop="8dp"
+        android:outlineProvider="bounds"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+    <EditText
+        android:id="@+id/landing_zipcodeInput"
+        android:layout_width="295dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="16dp"
+        android:contentDescription="@android:string/defaultMsisdnAlphaTag"
+        android:ems="10"
+        android:hint="(Optional) We'll use your location if empty"
+        android:inputType="number"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/landing_mapView" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Zip Code"
+        android:textColor="@color/colorPrimary"
+        android:textSize="13sp"
+        app:layout_constraintBottom_toBottomOf="@+id/landing_zipcodeInput"
+        app:layout_constraintEnd_toEndOf="@+id/landing_zipcodeInput"
+        app:layout_constraintHorizontal_bias="0.008"
+        app:layout_constraintStart_toStartOf="@+id/landing_zipcodeInput"
+        app:layout_constraintTop_toBottomOf="@+id/landing_mapView"
+        app:layout_constraintVertical_bias="0.209" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
