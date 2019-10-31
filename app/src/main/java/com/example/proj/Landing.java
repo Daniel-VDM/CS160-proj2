@@ -118,7 +118,7 @@ public class Landing extends AppCompatActivity implements OnMapReadyCallback {
                     toast.setGravity(Gravity.BOTTOM, 0, 100);
                     toast.show();
 
-                   new CountDownTimer(50, 300) {
+                   new CountDownTimer(50, 0) {
                         public void onTick(long millisUntilFinished) {
                         }
                         public void onFinish() {

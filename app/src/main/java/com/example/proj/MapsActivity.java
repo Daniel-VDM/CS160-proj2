@@ -82,7 +82,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         Toast.LENGTH_LONG);
                 toast.setGravity(Gravity.BOTTOM, 0, 850);
                 toast.show();
-                new CountDownTimer(50, 300) {
+                new CountDownTimer(50, 0) {
                     public void onTick(long millisUntilFinished) {
                     }
                     public void onFinish() {
@@ -223,6 +223,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
     }
 
+    // TODO sidescroll
 
     @Override
     protected void onResume() {
