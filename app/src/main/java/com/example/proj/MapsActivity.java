@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Address;
 import android.location.Geocoder;
+import android.location.Location;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.StrictMode;
@@ -35,8 +36,13 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
@@ -188,6 +194,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         station.put("range-per-hr-modelS", 55);
                         station.put("range-per-hr-i3", 48);
                     }
+                    double lat = station.getJSONObject("geometry")
+                            .getJSONObject("location").getDouble("lat");
+                    double lng = station.getJSONObject("geometry")
+                            .getJSONObject("location").getDouble("lng");
+                    station.put("distance", calcDistance(lat, lng));
                     currStations.put(station);
                 }
                 googlePlacesUrl = new StringBuilder("https://maps.googleapis.com/" +
@@ -217,18 +228,63 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     station.put("range-per-hr-modelS", 55);
                     station.put("range-per-hr-i3", 48);
                 }
+                double lat = station.getJSONObject("geometry")
+                        .getJSONObject("location").getDouble("lat");
+                double lng = station.getJSONObject("geometry")
+                        .getJSONObject("location").getDouble("lng");
+                station.put("distance", calcDistance(lat, lng));
                 currStations.put(station);
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        sortStationByDist();
+    }
+
+    private double calcDistance(double lat, double lng){
+        float[] results = new float[1];
+        Location.distanceBetween(currLoc.latitude, currLoc.longitude, lat, lng, results);
+        return results[0] * 0.000621371;
+    }
+
+    private void sortStationByDist(){
+        JSONArray sortedJsonArray = new JSONArray();
+
+        List<JSONObject> jsonValues = new ArrayList<>();
+        for (int i = 0; i < currStations.length(); i++) {
+            try {
+                jsonValues.add(currStations.getJSONObject(i));
+            } catch (JSONException ignore) {
+            }
+        }
+
+        Collections.sort( jsonValues, new Comparator<JSONObject>() {
+            @Override
+            public int compare(JSONObject a, JSONObject b) {
+                double A = 0;
+                double B = 0;
+                try {
+                    A = a.getDouble("distance");
+                    B = b.getDouble("distance");
+                }
+                catch (JSONException ignore) {
+                }
+                return Double.compare(A, B);
+            }
+        });
+
+        for (int i = 0; i < currStations.length(); i++) {
+            sortedJsonArray.put(jsonValues.get(i));
+        }
+        currStations = sortedJsonArray;
     }
 
     private void updateRecyler(){
         LinearLayoutManager layoutManager = new LinearLayoutManager(this,
                 LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(layoutManager);
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(this, currStations);
+        RecyclerViewAdapter adapter =
+                new RecyclerViewAdapter(this, currStations, currLoc, carSelected);
         recyclerView.setAdapter(adapter);
     }
 
@@ -236,6 +292,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     protected void onResume() {
         super.onResume();
         map.onResume();
+        update();
     }
 
     @Override
