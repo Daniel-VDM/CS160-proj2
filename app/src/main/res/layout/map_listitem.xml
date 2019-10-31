@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="1dp"
+    android:background="#000">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="250dp"
+        android:layout_height="120dp"
+        app:cardCornerRadius="4dp"
+        app:cardMaxElevation="2dp"
+        app:cardElevation="1dp"
+        android:layout_centerInParent="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/Distance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Distance: 1mi"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView13"
+                app:layout_constraintStart_toEndOf="@+id/imageView13"
+                app:layout_constraintTop_toBottomOf="@+id/imageView12" />
+
+            <TextView
+                android:id="@+id/ChargeTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="1dp"
+                android:text="Charge Time: 32 min"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView12"
+                app:layout_constraintStart_toEndOf="@+id/imageView12"
+                app:layout_constraintTop_toBottomOf="@+id/imageView5" />
+
+            <TextView
+                android:id="@+id/PlaceName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="ChargePoint Charging Station"
+                android:textAlignment="center"
+                android:textColor="@android:color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="204dp"
+                android:layout_height="2dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/PlaceName"
+                app:layout_constraintTop_toBottomOf="@+id/PlaceName"
+                app:srcCompat="@drawable/rectangle_2" />
+
+            <ImageView
+                android:id="@+id/imageView5"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.147"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/PlaceName"
+                app:srcCompat="@drawable/ic_perm_contact_calendar_black_24dp" />
+
+            <TextView
+                android:id="@+id/PlaceTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Open from 12am-12pm"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView5"
+                app:layout_constraintStart_toEndOf="@+id/imageView5"
+                app:layout_constraintTop_toTopOf="@+id/imageView5" />
+
+            <ImageView
+                android:id="@+id/open"
+                android:layout_width="29dp"
+                android:layout_height="9dp"
+                android:layout_marginStart="8dp"
+                app:layout_constraintBottom_toBottomOf="@+id/PlaceTime"
+                app:layout_constraintStart_toEndOf="@+id/PlaceTime"
+                app:layout_constraintTop_toTopOf="@+id/PlaceTime"
+                app:layout_constraintVertical_bias="0.55"
+                app:srcCompat="@drawable/open" />
+
+            <ImageView
+                android:id="@+id/close"
+                android:layout_width="29dp"
+                android:layout_height="9dp"
+                app:layout_constraintBottom_toBottomOf="@+id/open"
+                app:layout_constraintEnd_toEndOf="@+id/open"
+                app:layout_constraintStart_toStartOf="@+id/open"
+                app:layout_constraintTop_toTopOf="@+id/open"
+                app:srcCompat="@drawable/close" />
+
+            <ImageView
+                android:id="@+id/imageView12"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                app:layout_constraintEnd_toEndOf="@+id/imageView5"
+                app:layout_constraintStart_toStartOf="@+id/imageView5"
+                app:layout_constraintTop_toBottomOf="@+id/imageView5"
+                app:srcCompat="@drawable/ic_access_time_black_24dp" />
+
+            <ImageView
+                android:id="@+id/imageView13"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                app:layout_constraintEnd_toStartOf="@+id/ChargeTime"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/imageView12"
+                app:layout_constraintTop_toBottomOf="@+id/imageView12"
+                app:srcCompat="@drawable/ic_directions_car_black_24dp" />
+
+            <ImageView
+                android:id="@+id/StarFull0"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_marginStart="1dp"
+                app:layout_constraintBottom_toBottomOf="@+id/Rating"
+                app:layout_constraintStart_toEndOf="@+id/Rating"
+                app:layout_constraintTop_toTopOf="@+id/Rating"
+                app:layout_constraintVertical_bias="1.0"
+                app:srcCompat="@drawable/ic_star_black_24dp" />
+
+            <TextView
+                android:id="@+id/Rating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="3.3"
+                android:textColor="#EAC53B"
+                app:layout_constraintEnd_toStartOf="@+id/Distance"
+                app:layout_constraintStart_toStartOf="@+id/imageView13"
+                app:layout_constraintTop_toBottomOf="@+id/imageView13" />
+
+            <ImageView
+                android:id="@+id/StarFull1"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                app:layout_constraintBottom_toBottomOf="@+id/StarFull0"
+                app:layout_constraintStart_toEndOf="@+id/StarFull0"
+                app:layout_constraintTop_toTopOf="@+id/StarFull0"
+                app:layout_constraintVertical_bias="0.0"
+                app:srcCompat="@drawable/ic_star_black_24dp" />
+
+            <ImageView
+                android:id="@+id/StarFull2"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                app:layout_constraintBottom_toBottomOf="@+id/StarFull1"
+                app:layout_constraintStart_toEndOf="@+id/StarFull1"
+                app:layout_constraintTop_toTopOf="@+id/StarFull1"
+                app:layout_constraintVertical_bias="0.0"
+                app:srcCompat="@drawable/ic_star_black_24dp" />
+
+            <ImageView
+                android:id="@+id/StarFull3"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                app:layout_constraintBottom_toBottomOf="@+id/StarFull2"
+                app:layout_constraintStart_toEndOf="@+id/StarFull2"
+                app:layout_constraintTop_toTopOf="@+id/StarFull2"
+                app:layout_constraintVertical_bias="0.0"
+                app:srcCompat="@drawable/ic_star_black_24dp" />
+
+            <ImageView
+                android:id="@+id/StarFull4"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                app:layout_constraintBottom_toBottomOf="@+id/StarFull3"
+                app:layout_constraintStart_toEndOf="@+id/StarFull3"
+                app:layout_constraintTop_toTopOf="@+id/StarFull3"
+                app:layout_constraintVertical_bias="0.0"
+                app:srcCompat="@drawable/ic_star_black_24dp" />
+
+            <TextView
+                android:id="@+id/RatingCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="(12)"
+                android:textSize="8dp"
+                app:layout_constraintBottom_toBottomOf="@+id/StarFull4"
+                app:layout_constraintStart_toEndOf="@+id/StarFull4"
+                app:layout_constraintTop_toTopOf="@+id/StarFull4" />
+
+            <Button
+                android:id="@+id/More"
+                android:layout_width="57dp"
+                android:layout_height="33dp"
+                android:backgroundTint="@color/colorPrimary"
+                android:text="More"
+                android:textSize="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/RatingCount"
+                app:layout_constraintTop_toBottomOf="@+id/open"
+                app:layout_constraintVertical_bias="0.81" />
+
+            <ImageView
+                android:id="@+id/StarHalf0"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                app:layout_constraintBottom_toBottomOf="@+id/StarFull0"
+                app:layout_constraintEnd_toEndOf="@+id/StarFull0"
+                app:layout_constraintStart_toStartOf="@+id/StarFull0"
+                app:layout_constraintTop_toTopOf="@+id/StarFull0"
+                app:srcCompat="@drawable/ic_star_border_black_halp_24dp" />
+
+            <ImageView
+                android:id="@+id/StarHalf1"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                app:layout_constraintBottom_toBottomOf="@+id/StarFull1"
+                app:layout_constraintEnd_toEndOf="@+id/StarFull1"
+                app:layout_constraintStart_toStartOf="@+id/StarFull1"
+                app:layout_constraintTop_toTopOf="@+id/StarFull1"
+                app:srcCompat="@drawable/ic_star_border_black_halp_24dp" />
+
+            <ImageView
+                android:id="@+id/StarHalf2"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                app:layout_constraintBottom_toBottomOf="@+id/StarFull2"
+                app:layout_constraintEnd_toEndOf="@+id/StarFull2"
+                app:layout_constraintStart_toStartOf="@+id/StarFull2"
+                app:layout_constraintTop_toTopOf="@+id/StarFull2"
+                app:srcCompat="@drawable/ic_star_border_black_halp_24dp" />
+
+            <ImageView
+                android:id="@+id/StarHalf3"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                app:layout_constraintBottom_toBottomOf="@+id/StarFull3"
+                app:layout_constraintEnd_toEndOf="@+id/StarFull3"
+                app:layout_constraintStart_toStartOf="@+id/StarFull3"
+                app:layout_constraintTop_toTopOf="@+id/StarFull3"
+                app:srcCompat="@drawable/ic_star_border_black_halp_24dp" />
+
+            <ImageView
+                android:id="@+id/StarHalf4"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                app:layout_constraintBottom_toBottomOf="@+id/StarFull4"
+                app:layout_constraintEnd_toEndOf="@+id/StarFull4"
+                app:layout_constraintStart_toStartOf="@+id/StarFull4"
+                app:layout_constraintTop_toTopOf="@+id/StarFull4"
+                app:srcCompat="@drawable/ic_star_border_black_halp_24dp" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>
