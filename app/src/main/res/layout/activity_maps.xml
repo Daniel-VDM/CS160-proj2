@@ -51,22 +51,20 @@
         android:textColor="@color/colorPrimaryDark"
         android:textColorHint="@color/colorPrimaryDark"
         app:layout_constraintBottom_toBottomOf="@+id/imageView4"
-        app:layout_constraintEnd_toEndOf="@+id/imageView4"
-        app:layout_constraintHorizontal_bias="0.24"
-        app:layout_constraintStart_toEndOf="@+id/maps_searchButton"
+        app:layout_constraintEnd_toStartOf="@+id/maps_searchButton"
+        app:layout_constraintStart_toStartOf="@+id/imageView4"
         app:layout_constraintTop_toTopOf="@+id/imageView4"
-        app:layout_constraintVertical_bias="0.43" />
+        app:layout_constraintVertical_bias="0.77" />
 
     <Button
         android:id="@+id/maps_searchButton"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         android:background="@drawable/searchicon"
         android:textColorHighlight="#00AA5555"
-        app:layout_constraintBottom_toBottomOf="@+id/maps_zipcode"
-        app:layout_constraintStart_toStartOf="@+id/imageView4"
-        app:layout_constraintTop_toTopOf="@+id/imageView4"
-        app:layout_constraintVertical_bias="0.53" />
+        app:layout_constraintBottom_toBottomOf="@+id/imageView4"
+        app:layout_constraintEnd_toEndOf="@+id/imageView4"
+        app:layout_constraintTop_toTopOf="@+id/imageView4" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

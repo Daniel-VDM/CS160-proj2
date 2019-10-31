@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.provider.CalendarContract;
 import android.view.Gravity;
 import android.view.View;
@@ -57,7 +58,6 @@ public class Landing extends AppCompatActivity implements OnMapReadyCallback {
         model3 = findViewById(R.id.landing_model3Sel);
         modelS = findViewById(R.id.landing_modelSSel);
         i3 = findViewById(R.id.landing_i3Sel);
-
         setListeners();
 
         currLoc = new LatLng(0.7143528, -74.0059731);
@@ -117,14 +117,21 @@ public class Landing extends AppCompatActivity implements OnMapReadyCallback {
                             Toast.LENGTH_LONG);
                     toast.setGravity(Gravity.BOTTOM, 0, 100);
                     toast.show();
-                    searchBuotton.setAlpha(0.0f);
-                    Intent mapActivity = new Intent(Landing.this, MapsActivity.class);
-                    String zipCode = zipcodeInput.getText().toString();
-                    mapActivity.putExtra("CAR", carSelected);
-                    mapActivity.putExtra("CURR_LONG", currLoc.longitude);
-                    mapActivity.putExtra("CURR_LAT", currLoc.latitude);
-                    mapActivity.putExtra("TARGET_ZIP", zipCode);
-                    startActivity(mapActivity);
+
+                   new CountDownTimer(50, 300) {
+                        public void onTick(long millisUntilFinished) {
+                        }
+                        public void onFinish() {
+                            searchBuotton.setAlpha(0.0f);
+                            Intent mapActivity = new Intent(Landing.this, MapsActivity.class);
+                            String zipCode = zipcodeInput.getText().toString();
+                            mapActivity.putExtra("CAR", carSelected);
+                            mapActivity.putExtra("CURR_LONG", currLoc.longitude);
+                            mapActivity.putExtra("CURR_LAT", currLoc.latitude);
+                            mapActivity.putExtra("TARGET_ZIP", zipCode);
+                            startActivity(mapActivity);
+                        }
+                    }.start();
                 }
             }
         });
@@ -166,6 +173,7 @@ public class Landing extends AppCompatActivity implements OnMapReadyCallback {
     @Override
     protected void onResume() {
         super.onResume();
+        searchBuotton.setAlpha(1.0f);
         landingMap.onResume();
     }
 

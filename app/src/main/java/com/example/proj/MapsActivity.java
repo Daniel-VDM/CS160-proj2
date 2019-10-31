@@ -9,9 +9,11 @@ import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.StrictMode;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -70,6 +72,25 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         searchButton = findViewById(R.id.maps_searchButton);
         zipcodeInput = findViewById(R.id.maps_zipcode);
         map.onCreate(savedInstanceState);
+
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                zipcode = zipcodeInput.getText().toString();
+                Toast toast = Toast.makeText(getApplicationContext(),
+                        "Searching for charging stations!",
+                        Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.BOTTOM, 0, 850);
+                toast.show();
+                new CountDownTimer(50, 300) {
+                    public void onTick(long millisUntilFinished) {
+                    }
+                    public void onFinish() {
+                        update();
+                    }
+                }.start();
+            }
+        });
 
         processIntent();
         update();
@@ -201,6 +222,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             e.printStackTrace();
         }
     }
+
 
     @Override
     protected void onResume() {
