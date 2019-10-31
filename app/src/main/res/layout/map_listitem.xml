@@ -144,17 +144,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/timeIcon"
                 app:srcCompat="@drawable/ic_directions_car_black_24dp" />
 
-            <ImageView
-                android:id="@+id/StarFull0"
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:layout_marginStart="1dp"
-                app:layout_constraintBottom_toBottomOf="@+id/Rating"
-                app:layout_constraintStart_toEndOf="@+id/Rating"
-                app:layout_constraintTop_toTopOf="@+id/Rating"
-                app:layout_constraintVertical_bias="1.0"
-                app:srcCompat="@drawable/ic_star_black_24dp" />
-
             <TextView
                 android:id="@+id/Rating"
                 android:layout_width="wrap_content"
@@ -165,6 +154,17 @@
                 app:layout_constraintEnd_toStartOf="@+id/Distance"
                 app:layout_constraintStart_toStartOf="@+id/carIcon"
                 app:layout_constraintTop_toBottomOf="@+id/carIcon" />
+
+            <ImageView
+                android:id="@+id/StarFull0"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_marginStart="1dp"
+                app:layout_constraintBottom_toBottomOf="@+id/Rating"
+                app:layout_constraintStart_toEndOf="@+id/Rating"
+                app:layout_constraintTop_toTopOf="@+id/Rating"
+                app:layout_constraintVertical_bias="1.0"
+                app:srcCompat="@drawable/ic_star_black_24dp" />
 
             <ImageView
                 android:id="@+id/StarFull1"

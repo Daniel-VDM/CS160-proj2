@@ -24,7 +24,7 @@
         android:layout_height="55dp"
         app:layout_constraintBottom_toBottomOf="@+id/header_bg2"
         app:layout_constraintEnd_toEndOf="@+id/header_bg2"
-        app:layout_constraintHorizontal_bias="0.44"
+        app:layout_constraintHorizontal_bias="0.45"
         app:layout_constraintStart_toStartOf="@+id/header_bg2"
         app:layout_constraintTop_toTopOf="@+id/header_bg2"
         app:layout_constraintVertical_bias="0.592"
@@ -39,5 +39,297 @@
         app:layout_constraintStart_toEndOf="@+id/header_map2"
         app:layout_constraintTop_toTopOf="@+id/header_map2"
         app:srcCompat="@drawable/e" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="420dp"
+        android:layout_height="235dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/header_bg2"
+        app:srcCompat="@drawable/imagenotfound" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:srcCompat="@drawable/detailbg" />
+
+    <TextView
+        android:id="@+id/Title"
+        android:layout_width="308dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="sans-serif-black"
+        android:text="ChargePoint Charging Station"
+        android:textColor="@android:color/black"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="@+id/imageView3"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+    <TextView
+        android:id="@+id/rating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="3.3"
+        android:textColor="#EAC53B"
+        app:layout_constraintEnd_toEndOf="@+id/addressDetail"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/addressDetail"
+        app:layout_constraintTop_toBottomOf="@+id/addressDetail" />
+
+    <ImageView
+        android:id="@+id/starFull1"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        app:layout_constraintBottom_toBottomOf="@+id/starFull0"
+        app:layout_constraintStart_toEndOf="@+id/starFull0"
+        app:layout_constraintTop_toTopOf="@+id/starFull0"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/ic_star_black_24dp" />
+
+    <ImageView
+        android:id="@+id/starFull0"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_marginStart="1dp"
+        app:layout_constraintBottom_toBottomOf="@+id/rating"
+        app:layout_constraintStart_toEndOf="@+id/rating"
+        app:layout_constraintTop_toTopOf="@+id/rating"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/ic_star_black_24dp" />
+
+    <ImageView
+        android:id="@+id/starFull3"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        app:layout_constraintBottom_toBottomOf="@+id/starFull2"
+        app:layout_constraintStart_toEndOf="@+id/starFull2"
+        app:layout_constraintTop_toTopOf="@+id/starFull2"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/ic_star_black_24dp" />
+
+    <ImageView
+        android:id="@+id/starFull4"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        app:layout_constraintBottom_toBottomOf="@+id/starFull3"
+        app:layout_constraintStart_toEndOf="@+id/starFull3"
+        app:layout_constraintTop_toTopOf="@+id/starFull3"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/ic_star_black_24dp" />
+
+    <ImageView
+        android:id="@+id/starFull2"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        app:layout_constraintBottom_toBottomOf="@+id/starFull1"
+        app:layout_constraintStart_toEndOf="@+id/starFull1"
+        app:layout_constraintTop_toTopOf="@+id/starFull1"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/ic_star_black_24dp" />
+
+    <ImageView
+        android:id="@+id/starHalf0"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        app:layout_constraintBottom_toBottomOf="@+id/starFull0"
+        app:layout_constraintEnd_toEndOf="@+id/starFull0"
+        app:layout_constraintStart_toStartOf="@+id/starFull0"
+        app:layout_constraintTop_toTopOf="@+id/starFull0"
+        app:srcCompat="@drawable/ic_star_border_black_halp_24dp" />
+
+    <ImageView
+        android:id="@+id/starHalf3"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        app:layout_constraintBottom_toBottomOf="@+id/starFull3"
+        app:layout_constraintEnd_toEndOf="@+id/starFull3"
+        app:layout_constraintStart_toStartOf="@+id/starFull3"
+        app:layout_constraintTop_toTopOf="@+id/starFull3"
+        app:srcCompat="@drawable/ic_star_border_black_halp_24dp" />
+
+    <ImageView
+        android:id="@+id/starHalf2"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        app:layout_constraintBottom_toBottomOf="@+id/starFull2"
+        app:layout_constraintEnd_toEndOf="@+id/starFull2"
+        app:layout_constraintStart_toStartOf="@+id/starFull2"
+        app:layout_constraintTop_toTopOf="@+id/starFull2"
+        app:srcCompat="@drawable/ic_star_border_black_halp_24dp" />
+
+    <ImageView
+        android:id="@+id/starHalf4"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        app:layout_constraintBottom_toBottomOf="@+id/starFull4"
+        app:layout_constraintEnd_toEndOf="@+id/starFull4"
+        app:layout_constraintStart_toStartOf="@+id/starFull4"
+        app:layout_constraintTop_toTopOf="@+id/starFull4"
+        app:srcCompat="@drawable/ic_star_border_black_halp_24dp" />
+
+    <ImageView
+        android:id="@+id/starHalf1"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        app:layout_constraintBottom_toBottomOf="@+id/starFull1"
+        app:layout_constraintEnd_toEndOf="@+id/starFull1"
+        app:layout_constraintStart_toStartOf="@+id/starFull1"
+        app:layout_constraintTop_toTopOf="@+id/starFull1"
+        app:srcCompat="@drawable/ic_star_border_black_halp_24dp" />
+
+    <TextView
+        android:id="@+id/ratingCountDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:text="12 reviews"
+        android:textSize="12dp"
+        app:layout_constraintBottom_toBottomOf="@+id/starFull4"
+        app:layout_constraintStart_toEndOf="@+id/starFull4"
+        app:layout_constraintTop_toTopOf="@+id/starFull4" />
+
+    <ImageView
+        android:id="@+id/openMaybeDetail"
+        android:layout_width="50dp"
+        android:layout_height="25dp"
+        app:layout_constraintBottom_toBottomOf="@+id/openDetail"
+        app:layout_constraintEnd_toEndOf="@+id/openDetail"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/openDetail"
+        app:layout_constraintTop_toTopOf="@+id/openDetail"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/openmaybe" />
+
+    <ImageView
+        android:id="@+id/closeDetail"
+        android:layout_width="50dp"
+        android:layout_height="25dp"
+        app:layout_constraintBottom_toBottomOf="@+id/openDetail"
+        app:layout_constraintEnd_toEndOf="@+id/openDetail"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/openDetail"
+        app:layout_constraintTop_toTopOf="@+id/openDetail"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/close" />
+
+    <ImageView
+        android:id="@+id/openDetail"
+        android:layout_width="50dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginBottom="7dp"
+        app:layout_constraintBottom_toBottomOf="@+id/Title"
+        app:layout_constraintStart_toEndOf="@+id/Title"
+        app:layout_constraintTop_toTopOf="@+id/Title"
+        app:layout_constraintVertical_bias="0.125"
+        app:srcCompat="@drawable/open" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="32dp"
+        app:layout_constraintBottom_toBottomOf="@+id/ratingCountDetail"
+        app:layout_constraintStart_toEndOf="@+id/ratingCountDetail"
+        app:layout_constraintTop_toTopOf="@+id/ratingCountDetail"
+        app:layout_constraintVertical_bias="0.75"
+        app:srcCompat="@drawable/ic_monetization_on_black_24dp" />
+
+    <TextView
+        android:id="@+id/priceDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:text="12 Cents per kWh"
+        android:textSize="14dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView5"
+        app:layout_constraintStart_toEndOf="@+id/imageView5"
+        app:layout_constraintTop_toTopOf="@+id/imageView5" />
+
+    <TextView
+        android:id="@+id/addressDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2165 Kittredge St, Berkeley, CA 94704"
+        app:layout_constraintEnd_toEndOf="@+id/Title"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/Title"
+        app:layout_constraintTop_toBottomOf="@+id/Title" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:text="Price Rating:"
+        android:textSize="12dp"
+        app:layout_constraintEnd_toEndOf="@+id/rating"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/rating"
+        app:layout_constraintTop_toBottomOf="@+id/rating" />
+
+    <ImageView
+        android:id="@+id/money1"
+        android:layout_width="13dp"
+        android:layout_height="13dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/money0"
+        app:layout_constraintStart_toEndOf="@+id/textView8"
+        app:layout_constraintTop_toTopOf="@+id/money0"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/ic_attach_money_black_24dp" />
+
+    <ImageView
+        android:id="@+id/money2"
+        android:layout_width="13dp"
+        android:layout_height="13dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/money1"
+        app:layout_constraintStart_toStartOf="@+id/money1"
+        app:layout_constraintTop_toTopOf="@+id/money1"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/ic_attach_money_black_24dp" />
+
+    <ImageView
+        android:id="@+id/money0"
+        android:layout_width="13dp"
+        android:layout_height="13dp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView8"
+        app:layout_constraintStart_toEndOf="@+id/textView8"
+        app:layout_constraintTop_toTopOf="@+id/textView8"
+        app:layout_constraintVertical_bias="0.18"
+        app:srcCompat="@drawable/ic_attach_money_black_24dp" />
+
+    <ImageView
+        android:id="@+id/imageView8"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="2dp"
+        app:layout_constraintEnd_toEndOf="@+id/imageView5"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/imageView5"
+        app:layout_constraintTop_toBottomOf="@+id/imageView5"
+        app:srcCompat="@drawable/ic_directions_car_black_24dp" />
+
+    <TextView
+        android:id="@+id/driveDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:text="ETA: 5 min"
+        android:textSize="14dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView8"
+        app:layout_constraintStart_toEndOf="@+id/imageView8"
+        app:layout_constraintTop_toTopOf="@+id/imageView8"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

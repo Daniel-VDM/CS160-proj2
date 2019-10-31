@@ -50,7 +50,7 @@ import java.util.Random;
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
-    String key = "AIzaSyCtNO_y0trt6tjgP8ApsdGIm1IK4rjZFeQ";
+    static String key = "AIzaSyCtNO_y0trt6tjgP8ApsdGIm1IK4rjZFeQ";
 
     JSONArray currStations;
 
@@ -335,7 +335,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         googleMap.addMarker(new MarkerOptions()
                 .position(currLoc)
                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
-                .title("You are here!")).showInfoWindow();
+                .title("You are here!"));
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(lookLoc));
 
         for(int i = 0; i < currStations.length(); i++){
@@ -358,7 +358,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 googleMap.addMarker(new MarkerOptions()
                         .position(new LatLng(lat, lng))
                         .icon(BitmapDescriptorFactory.fromBitmap(myBitmap))
-                        .title(name)).showInfoWindow();
+                        .title(name));
             } catch (JSONException | IOException ignored) {
             }
         }

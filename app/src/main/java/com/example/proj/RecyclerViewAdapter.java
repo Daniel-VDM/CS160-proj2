@@ -97,7 +97,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @SuppressLint("SetTextI18n")
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         try {
             JSONObject jsonObject = (JSONObject) currStations.get(position);
 
@@ -208,7 +208,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 @Override
                 public void onClick(View view) {
                     Intent detail = new Intent(context, Detail.class);
-                    String serialCurrStation = currStations.toString();
+                    String serialCurrStation = null;
+                    try {
+                        serialCurrStation = currStations.get(position).toString();
+                    } catch (JSONException e) {
+                        Log.e(TAG, e.toString());
+                    }
                     detail.putExtra("CAR", car);
                     detail.putExtra("CURR_LONG", currloc.longitude);
                     detail.putExtra("CURR_LAT", currloc.latitude);
