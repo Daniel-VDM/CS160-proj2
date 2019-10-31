@@ -2,6 +2,7 @@ package com.example.proj;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.location.Location;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,7 +20,6 @@ import com.google.android.gms.maps.model.LatLng;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -28,7 +28,6 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -36,7 +35,14 @@ import java.util.Objects;
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>{
 
     private static final String TAG = "ADAPTER LOG";
-    private final double chargePercentage = Math.random();
+//    private final double chargePercentage = Math.random();
+    private final double chargePercentage = 0.03;
+    private final double Model3Range = 260;
+    private final double ModelSRange = 300;
+    private final double i3Range = 190;
+    private final double currModel3Range = chargePercentage * Model3Range;
+    private final double currModelSRange = chargePercentage * ModelSRange;
+    private final double curri3Range = chargePercentage * i3Range;
 
     private JSONArray currStations;
     private Context context;
@@ -89,28 +95,127 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         return httpData;
     }
 
-
-    private float calcDistance(double lat, double lng){
-        float[] results = new float[1];
-        Location.distanceBetween(currloc.latitude, currloc.longitude, lat, lng, results);
-        return new BigDecimal(results[0] * 0.000621371)
-                .setScale(2, RoundingMode.HALF_UP).floatValue();
-    }
-
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Log.d(TAG, "And we're in...");
         try {
             JSONObject jsonObject = (JSONObject) currStations.get(position);
 
-            // Distance
-            double lat = jsonObject.getJSONObject("geometry")
-                    .getJSONObject("location").getDouble("lat");
-            double lng = jsonObject.getJSONObject("geometry")
-                    .getJSONObject("location").getDouble("lng");
-            float dist = calcDistance(lat, lng);
-            holder.Distance.setText("Distance: " + dist + " mi");
+            if (jsonObject.has("name")) {
+                holder.PlaceName.setText(jsonObject.getString("name"));
+            } else {
+                holder.PlaceName.setText("Charge Station");
+            }
+
+            if (jsonObject.has("vicinity")) {
+                holder.Location.setText(jsonObject.getString("vicinity"));
+            } else {
+                holder.Location.setText("Address is unknown");
+            }
+
+            if (jsonObject.has("opening_hours")){
+                if (jsonObject.getJSONObject("opening_hours").getBoolean("open_now")){
+                    holder.open.setAlpha(1.0f);
+                    holder.close.setAlpha(0.0f);
+                    holder.openMaybe.setAlpha(0.0f);
+                } else {
+                    holder.open.setAlpha(0.0f);
+                    holder.close.setAlpha(1.0f);
+                    holder.openMaybe.setAlpha(0.0f);
+                }
+            } else {
+                holder.open.setAlpha(0.0f);
+                holder.close.setAlpha(0.0f);
+                holder.openMaybe.setAlpha(1.0f);
+            }
+
+            int rating = jsonObject.has("rating") ? jsonObject.getInt("rating") : 0;
+            int ratingCount = jsonObject.has("user_ratings_total") ?
+                    jsonObject.getInt("user_ratings_total") : 0;
+            holder.Rating.setText(rating + "");
+            for (int i = 0; i < 5; i ++){
+                if (i < rating){
+                    ImageView full = holder.StarFull.get(i);
+                    ImageView half = holder.StarHalf.get(i);
+                    full.setAlpha(1.0f);
+                    half.setAlpha(0.0f);
+                } else {
+                    ImageView full = holder.StarFull.get(i);
+                    ImageView half = holder.StarHalf.get(i);
+                    full.setAlpha(0.0f);
+                    half.setAlpha(1.0f);
+                }
+            }
+            holder.RatingCount.setText("(" + ratingCount + ")");
+
+            int rangePerHr;
+            double leftRange;
+            double timeLeft;
+            float dist = new BigDecimal(jsonObject.getDouble("distance"))
+                    .setScale(2, RoundingMode.HALF_UP).floatValue();
+            switch (car){
+                case "model3":
+                    rangePerHr = jsonObject.getInt("range-per-hr-model3");
+                    leftRange = Model3Range - currModel3Range;
+                    timeLeft = new BigDecimal( leftRange / rangePerHr)
+                            .setScale(2, RoundingMode.HALF_UP).doubleValue();
+                    if (timeLeft > 1){
+                        holder.ChargeTime.setText("Charge Time: " + timeLeft + " hrs");
+                    } else {
+                        holder.ChargeTime.setText("Charge Time: " + timeLeft*60 + " mins");
+                    }
+                    if (dist > currModel3Range){
+                        holder.Distance.setText("Out of range");
+                    } else {
+                        holder.Distance.setText("Distance: " + dist + " mi (in range)");
+                    }
+                    break;
+                case "modelS":
+                    rangePerHr = jsonObject.getInt("range-per-hr-modelS");
+                    leftRange = Model3Range - currModel3Range;
+                    timeLeft = new BigDecimal( leftRange / rangePerHr)
+                            .setScale(2, RoundingMode.HALF_UP).doubleValue();
+                    if (timeLeft > 1){
+                        holder.ChargeTime.setText("Charge Time: " + timeLeft + " hrs");
+                    } else {
+                        holder.ChargeTime.setText("Charge Time: " + timeLeft*60 + " mins");
+                    }
+                    if (dist > currModelSRange){
+                        holder.Distance.setText("Out of range");
+                    } else {
+                        holder.Distance.setText("Distance: " + dist + " mi (in range)");
+                    }
+                    break;
+                case "i3":
+                    rangePerHr = jsonObject.getInt("range-per-hr-i3");
+                    leftRange = Model3Range - currModel3Range;
+                    timeLeft = new BigDecimal( leftRange / rangePerHr)
+                            .setScale(2, RoundingMode.HALF_UP).doubleValue();
+                    if (timeLeft > 1){
+                        holder.ChargeTime.setText("Charge Time: " + timeLeft + " hrs");
+                    } else {
+                        holder.ChargeTime.setText("Charge Time: " + timeLeft*60 + " mins");
+                    }
+                    if (dist > curri3Range){
+                        holder.Distance.setText("Out of range");
+                    } else {
+                        holder.Distance.setText("Distance: " + dist + " mi (in range)");
+                    }
+                    break;
+            }
+
+            holder.More.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent detail = new Intent(context, Detail.class);
+                    String serialCurrStation = currStations.toString();
+                    detail.putExtra("CAR", car);
+                    detail.putExtra("CURR_LONG", currloc.longitude);
+                    detail.putExtra("CURR_LAT", currloc.latitude);
+                    detail.putExtra("CURR_STATION", serialCurrStation);
+                    context.startActivity(detail);
+                }
+            });
 
         } catch (JSONException e) {
             Log.e(TAG, e.toString());
@@ -125,7 +230,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     class ViewHolder extends RecyclerView.ViewHolder{
 
         TextView PlaceName;
-        TextView PlaceTime;
+        TextView Location;
         TextView ChargeTime;
         TextView Distance;
         TextView Rating;
@@ -136,6 +241,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         ImageView carIcon;
         ImageView open;
         ImageView close;
+        ImageView openMaybe;
         List<ImageView> StarFull;
         List<ImageView> StarHalf;
         Button More;
@@ -143,7 +249,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         ViewHolder(@NonNull View itemView) {
             super(itemView);
             PlaceName = itemView.findViewById(R.id.PlaceName);
-            PlaceTime = itemView.findViewById(R.id.PlaceTime);
+            Location = itemView.findViewById(R.id.Location);
             ChargeTime = itemView.findViewById(R.id.ChargeTime);
             Distance = itemView.findViewById(R.id.Distance);
             Rating = itemView.findViewById(R.id.Rating);
@@ -154,23 +260,22 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             carIcon = itemView.findViewById(R.id.carIcon);
             open = itemView.findViewById(R.id.open);
             close = itemView.findViewById(R.id.close);
+            openMaybe = itemView.findViewById(R.id.OpenMaybe);
             More = itemView.findViewById(R.id.More);
 
-            final View view = itemView;
-            StarFull = new ArrayList<ImageView>(){{
-                view.findViewById(R.id.StarFull0);
-                view.findViewById(R.id.StarFull1);
-                view.findViewById(R.id.StarFull2);
-                view.findViewById(R.id.StarFull3);
-                view.findViewById(R.id.StarFull4);
-            }};
-            StarHalf = new ArrayList<ImageView>(){{
-                view.findViewById(R.id.StarHalf0);
-                view.findViewById(R.id.StarHalf1);
-                view.findViewById(R.id.StarHalf2);
-                view.findViewById(R.id.StarHalf3);
-                view.findViewById(R.id.StarHalf4);
-            }};
+            StarFull = new ArrayList<>();
+            StarFull.add((ImageView) itemView.findViewById(R.id.StarFull0));
+            StarFull.add((ImageView) itemView.findViewById(R.id.StarFull1));
+            StarFull.add((ImageView) itemView.findViewById(R.id.StarFull2));
+            StarFull.add((ImageView) itemView.findViewById(R.id.StarFull3));
+            StarFull.add((ImageView) itemView.findViewById(R.id.StarFull4));
+
+            StarHalf = new ArrayList<>();
+            StarHalf.add((ImageView) itemView.findViewById(R.id.StarHalf0));
+            StarHalf.add((ImageView) itemView.findViewById(R.id.StarHalf1));
+            StarHalf.add((ImageView) itemView.findViewById(R.id.StarHalf2));
+            StarHalf.add((ImageView) itemView.findViewById(R.id.StarHalf3));
+            StarHalf.add((ImageView) itemView.findViewById(R.id.StarHalf4));
 
         }
     }

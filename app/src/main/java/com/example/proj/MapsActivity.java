@@ -16,6 +16,7 @@ import android.os.StrictMode;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -78,6 +79,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         zipcodeInput = findViewById(R.id.maps_zipcode);
         recyclerView = findViewById(R.id.map_Recyler);
         map.onCreate(savedInstanceState);
+
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
 
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -292,13 +296,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     protected void onResume() {
         super.onResume();
         map.onResume();
-        update();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        map.onStart();
     }
 
     @Override
@@ -333,7 +335,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         googleMap.addMarker(new MarkerOptions()
                 .position(currLoc)
                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
-                .title("You are here!"));
+                .title("You are here!")).showInfoWindow();
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(lookLoc));
 
         for(int i = 0; i < currStations.length(); i++){
@@ -356,7 +358,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 googleMap.addMarker(new MarkerOptions()
                         .position(new LatLng(lat, lng))
                         .icon(BitmapDescriptorFactory.fromBitmap(myBitmap))
-                        .title(name));
+                        .title(name)).showInfoWindow();
             } catch (JSONException | IOException ignored) {
             }
         }
