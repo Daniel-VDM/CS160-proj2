@@ -1,6 +1,8 @@
 package com.example.proj;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -57,6 +59,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     EditText zipcodeInput;
     Geocoder geocoder;
     MapView map;
+    RecyclerView recyclerView;
     private GoogleMap googleMap;
 
     @Override
@@ -71,6 +74,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         map = findViewById(R.id.map);
         searchButton = findViewById(R.id.maps_searchButton);
         zipcodeInput = findViewById(R.id.maps_zipcode);
+        recyclerView = findViewById(R.id.map_Recyler);
         map.onCreate(savedInstanceState);
 
         searchButton.setOnClickListener(new View.OnClickListener() {
@@ -123,6 +127,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         }
         updateLocations();
+        initRecyclerView();
         map.getMapAsync(this);
     }
 
@@ -223,7 +228,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
     }
 
-    // TODO sidescroll
+    private void initRecyclerView(){
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this,
+                LinearLayoutManager.HORIZONTAL, false);
+        recyclerView.setLayoutManager(layoutManager);
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(this, currStations);
+        recyclerView.setAdapter(adapter);
+    }
 
     @Override
     protected void onResume() {

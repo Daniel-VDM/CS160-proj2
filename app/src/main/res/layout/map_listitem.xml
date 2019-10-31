@@ -4,8 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_margin="1dp"
-    android:background="#000">
+    android:layout_margin="1dp">
 
     <androidx.cardview.widget.CardView
         android:layout_width="250dp"
@@ -25,9 +24,9 @@
                 android:layout_height="wrap_content"
                 android:text="Distance: 1mi"
                 android:textSize="12sp"
-                app:layout_constraintBottom_toBottomOf="@+id/imageView13"
-                app:layout_constraintStart_toEndOf="@+id/imageView13"
-                app:layout_constraintTop_toBottomOf="@+id/imageView12" />
+                app:layout_constraintBottom_toBottomOf="@+id/carIcon"
+                app:layout_constraintStart_toEndOf="@+id/carIcon"
+                app:layout_constraintTop_toBottomOf="@+id/timeIcon" />
 
             <TextView
                 android:id="@+id/ChargeTime"
@@ -36,9 +35,9 @@
                 android:layout_marginStart="1dp"
                 android:text="Charge Time: 32 min"
                 android:textSize="12sp"
-                app:layout_constraintBottom_toBottomOf="@+id/imageView12"
-                app:layout_constraintStart_toEndOf="@+id/imageView12"
-                app:layout_constraintTop_toBottomOf="@+id/imageView5" />
+                app:layout_constraintBottom_toBottomOf="@+id/timeIcon"
+                app:layout_constraintStart_toEndOf="@+id/timeIcon"
+                app:layout_constraintTop_toBottomOf="@+id/openIcon" />
 
             <TextView
                 android:id="@+id/PlaceName"
@@ -53,7 +52,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/bar"
                 android:layout_width="204dp"
                 android:layout_height="2dp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -62,7 +61,7 @@
                 app:srcCompat="@drawable/rectangle_2" />
 
             <ImageView
-                android:id="@+id/imageView5"
+                android:id="@+id/openIcon"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_marginTop="8dp"
@@ -78,9 +77,9 @@
                 android:layout_height="wrap_content"
                 android:text="Open from 12am-12pm"
                 android:textSize="12sp"
-                app:layout_constraintBottom_toBottomOf="@+id/imageView5"
-                app:layout_constraintStart_toEndOf="@+id/imageView5"
-                app:layout_constraintTop_toTopOf="@+id/imageView5" />
+                app:layout_constraintBottom_toBottomOf="@+id/openIcon"
+                app:layout_constraintStart_toEndOf="@+id/openIcon"
+                app:layout_constraintTop_toTopOf="@+id/openIcon" />
 
             <ImageView
                 android:id="@+id/open"
@@ -104,22 +103,22 @@
                 app:srcCompat="@drawable/close" />
 
             <ImageView
-                android:id="@+id/imageView12"
+                android:id="@+id/timeIcon"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                app:layout_constraintEnd_toEndOf="@+id/imageView5"
-                app:layout_constraintStart_toStartOf="@+id/imageView5"
-                app:layout_constraintTop_toBottomOf="@+id/imageView5"
+                app:layout_constraintEnd_toEndOf="@+id/openIcon"
+                app:layout_constraintStart_toStartOf="@+id/openIcon"
+                app:layout_constraintTop_toBottomOf="@+id/openIcon"
                 app:srcCompat="@drawable/ic_access_time_black_24dp" />
 
             <ImageView
-                android:id="@+id/imageView13"
+                android:id="@+id/carIcon"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 app:layout_constraintEnd_toStartOf="@+id/ChargeTime"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/imageView12"
-                app:layout_constraintTop_toBottomOf="@+id/imageView12"
+                app:layout_constraintStart_toStartOf="@+id/timeIcon"
+                app:layout_constraintTop_toBottomOf="@+id/timeIcon"
                 app:srcCompat="@drawable/ic_directions_car_black_24dp" />
 
             <ImageView
@@ -140,8 +139,8 @@
                 android:text="3.3"
                 android:textColor="#EAC53B"
                 app:layout_constraintEnd_toStartOf="@+id/Distance"
-                app:layout_constraintStart_toStartOf="@+id/imageView13"
-                app:layout_constraintTop_toBottomOf="@+id/imageView13" />
+                app:layout_constraintStart_toStartOf="@+id/carIcon"
+                app:layout_constraintTop_toBottomOf="@+id/carIcon" />
 
             <ImageView
                 android:id="@+id/StarFull1"
