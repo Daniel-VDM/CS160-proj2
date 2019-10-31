@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_margin="1dp">
+    android:layout_margin="10dp">
 
     <androidx.cardview.widget.CardView
         android:layout_width="250dp"
-        android:layout_height="120dp"
-        app:cardCornerRadius="4dp"
-        app:cardMaxElevation="2dp"
-        app:cardElevation="1dp"
-        android:layout_centerInParent="true">
+        android:layout_height="135dp"
+        android:layout_centerInParent="true"
+        app:cardCornerRadius="14dp"
+        >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -23,7 +22,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Distance: 1mi"
-                android:textSize="12sp"
+                android:textSize="13sp"
                 app:layout_constraintBottom_toBottomOf="@+id/carIcon"
                 app:layout_constraintStart_toEndOf="@+id/carIcon"
                 app:layout_constraintTop_toBottomOf="@+id/timeIcon" />
@@ -34,7 +33,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="1dp"
                 android:text="Charge Time: 32 min"
-                android:textSize="12sp"
+                android:textSize="13sp"
                 app:layout_constraintBottom_toBottomOf="@+id/timeIcon"
                 app:layout_constraintStart_toEndOf="@+id/timeIcon"
                 app:layout_constraintTop_toBottomOf="@+id/openIcon" />
@@ -43,11 +42,13 @@
                 android:id="@+id/PlaceName"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="12dp"
                 android:text="ChargePoint Charging Station"
                 android:textAlignment="center"
                 android:textColor="@android:color/black"
+                android:textSize="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -55,6 +56,7 @@
                 android:id="@+id/bar"
                 android:layout_width="204dp"
                 android:layout_height="2dp"
+                android:layout_marginTop="1dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/PlaceName"
                 app:layout_constraintTop_toBottomOf="@+id/PlaceName"
@@ -64,9 +66,9 @@
                 android:id="@+id/openIcon"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="6dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.147"
+                app:layout_constraintHorizontal_bias="0.1"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/PlaceName"
                 app:srcCompat="@drawable/ic_perm_contact_calendar_black_24dp" />
@@ -76,15 +78,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Open from 12am-12pm"
-                android:textSize="12sp"
+                android:textSize="13sp"
                 app:layout_constraintBottom_toBottomOf="@+id/openIcon"
                 app:layout_constraintStart_toEndOf="@+id/openIcon"
                 app:layout_constraintTop_toTopOf="@+id/openIcon" />
 
             <ImageView
                 android:id="@+id/open"
-                android:layout_width="29dp"
-                android:layout_height="9dp"
+                android:layout_width="35dp"
+                android:layout_height="15dp"
                 android:layout_marginStart="8dp"
                 app:layout_constraintBottom_toBottomOf="@+id/PlaceTime"
                 app:layout_constraintStart_toEndOf="@+id/PlaceTime"
@@ -94,8 +96,8 @@
 
             <ImageView
                 android:id="@+id/close"
-                android:layout_width="29dp"
-                android:layout_height="9dp"
+                android:layout_width="40dp"
+                android:layout_height="18dp"
                 app:layout_constraintBottom_toBottomOf="@+id/open"
                 app:layout_constraintEnd_toEndOf="@+id/open"
                 app:layout_constraintStart_toStartOf="@+id/open"
@@ -106,6 +108,7 @@
                 android:id="@+id/timeIcon"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
+                android:layout_marginTop="2dp"
                 app:layout_constraintEnd_toEndOf="@+id/openIcon"
                 app:layout_constraintStart_toStartOf="@+id/openIcon"
                 app:layout_constraintTop_toBottomOf="@+id/openIcon"
@@ -115,6 +118,7 @@
                 android:id="@+id/carIcon"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
+                android:layout_marginTop="2dp"
                 app:layout_constraintEnd_toStartOf="@+id/ChargeTime"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/timeIcon"
@@ -136,6 +140,7 @@
                 android:id="@+id/Rating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
                 android:text="3.3"
                 android:textColor="#EAC53B"
                 app:layout_constraintEnd_toStartOf="@+id/Distance"
@@ -186,6 +191,7 @@
                 android:id="@+id/RatingCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
                 android:text="(12)"
                 android:textSize="8dp"
                 app:layout_constraintBottom_toBottomOf="@+id/StarFull4"
@@ -194,16 +200,20 @@
 
             <Button
                 android:id="@+id/More"
-                android:layout_width="57dp"
-                android:layout_height="33dp"
+                android:layout_width="75dp"
+                android:layout_height="35dp"
+                android:layout_marginBottom="2dp"
                 android:backgroundTint="@color/colorPrimary"
+                android:elevation="0dp"
+                android:shadowColor="#00FFFFFF"
+                android:singleLine="true"
                 android:text="More"
                 android:textSize="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/RatingCount"
                 app:layout_constraintTop_toBottomOf="@+id/open"
-                app:layout_constraintVertical_bias="0.81" />
+                app:layout_constraintVertical_bias="0.90999997" />
 
             <ImageView
                 android:id="@+id/StarHalf0"
