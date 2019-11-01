@@ -80,7 +80,7 @@
         android:layout_height="55dp"
         app:layout_constraintBottom_toBottomOf="@+id/header_bg"
         app:layout_constraintEnd_toEndOf="@+id/header_bg"
-        app:layout_constraintHorizontal_bias="0.45"
+        app:layout_constraintHorizontal_bias="0.46"
         app:layout_constraintStart_toStartOf="@+id/header_bg"
         app:layout_constraintTop_toTopOf="@+id/header_bg"
         app:layout_constraintVertical_bias="0.592"
