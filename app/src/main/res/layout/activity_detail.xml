@@ -12,7 +12,6 @@
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
@@ -365,6 +364,101 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView13"
         app:srcCompat="@drawable/border" />
 
+    <TextView
+        android:id="@+id/queueTimeC"
+        android:layout_width="75dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="Queue: 10min"
+        android:textSize="11sp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewCC"
+        app:layout_constraintStart_toEndOf="@+id/imageViewCC"
+        app:layout_constraintTop_toTopOf="@+id/imageViewCC" />
+
+    <ImageView
+        android:id="@+id/imageViewBB"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewB"
+        app:layout_constraintStart_toEndOf="@+id/imageViewB"
+        app:layout_constraintTop_toTopOf="@+id/imageViewB"
+        app:srcCompat="@drawable/ic_timer_black_24dp" />
+
+    <ImageView
+        android:id="@+id/imageViewCC"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewC"
+        app:layout_constraintStart_toEndOf="@+id/imageViewC"
+        app:layout_constraintTop_toTopOf="@+id/imageViewC"
+        app:srcCompat="@drawable/ic_timer_black_24dp" />
+
+    <TextView
+        android:id="@+id/queueTimeB"
+        android:layout_width="75dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="Queue: 10min"
+        android:textSize="11sp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewBB"
+        app:layout_constraintStart_toEndOf="@+id/imageViewBB"
+        app:layout_constraintTop_toTopOf="@+id/imageViewBB" />
+
+    <ImageView
+        android:id="@+id/imageViewC"
+        android:layout_width="40dp"
+        android:layout_height="17dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewC"
+        app:layout_constraintStart_toEndOf="@+id/textViewC"
+        app:layout_constraintTop_toTopOf="@+id/textViewC"
+        app:srcCompat="@drawable/stationbg" />
+
+    <TextView
+        android:id="@+id/textViewC"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="CCS"
+        android:textSize="12dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewCCC"
+        app:layout_constraintStart_toEndOf="@+id/imageViewCCC"
+        app:layout_constraintTop_toTopOf="@+id/imageViewCCC" />
+
+    <TextView
+        android:id="@+id/textViewB"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="CHAdeMO"
+        android:textSize="12dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewBBB"
+        app:layout_constraintStart_toEndOf="@+id/imageViewBBB"
+        app:layout_constraintTop_toTopOf="@+id/imageViewBBB" />
+
+    <ImageView
+        android:id="@+id/imageViewCCC"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        app:layout_constraintEnd_toEndOf="@+id/imageViewBBB"
+        app:layout_constraintStart_toStartOf="@+id/imageViewBBB"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewBBB"
+        app:srcCompat="@drawable/ic_ev_station_black_24dp" />
+
+    <ImageView
+        android:id="@+id/imageViewBBB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        app:layout_constraintEnd_toEndOf="@+id/imageViewAAA"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/imageViewAAA"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewAAA"
+        app:srcCompat="@drawable/ic_ev_station_black_24dp" />
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingActionButton3"
         android:layout_width="wrap_content"
@@ -419,5 +513,181 @@
         app:layout_constraintStart_toEndOf="@+id/imageView16"
         app:layout_constraintTop_toTopOf="@+id/imageView16"
         app:srcCompat="@drawable/detailtext2" />
+
+    <ImageView
+        android:id="@+id/imageView18"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="@+id/imageView13"
+        app:layout_constraintTop_toTopOf="@+id/imageView13"
+        app:srcCompat="@drawable/ic_local_phone_black_24dp" />
+
+    <ImageView
+        android:id="@+id/imageView19"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        app:layout_constraintEnd_toEndOf="@+id/imageView18"
+        app:layout_constraintStart_toStartOf="@+id/imageView18"
+        app:layout_constraintTop_toBottomOf="@+id/imageView18"
+        app:srcCompat="@drawable/ic_insert_link_black_24dp" />
+
+    <TextView
+        android:id="@+id/phoneNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginBottom="2dp"
+        android:text="1 (800) 123 4567"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView18"
+        app:layout_constraintStart_toEndOf="@+id/imageView18"
+        app:layout_constraintTop_toTopOf="@+id/imageView18"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <Button
+        android:id="@+id/link"
+        android:layout_width="277dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="2dp"
+        android:background="#00FFFFFF"
+        android:hapticFeedbackEnabled="false"
+        android:text="https://www.chargepoint.com/"
+        android:textAlignment="textStart"
+        android:textAllCaps="false"
+        android:textColor="#606060"
+        android:textSize="14sp"
+        app:layout_constraintStart_toEndOf="@+id/imageView19"
+        app:layout_constraintTop_toTopOf="@+id/imageView19" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="83dp"
+        android:layout_height="19dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="Availabilitiy"
+        app:layout_constraintStart_toStartOf="@+id/imageView14"
+        app:layout_constraintTop_toTopOf="@+id/imageView14" />
+
+    <ImageView
+        android:id="@+id/imageViewAA"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewA"
+        app:layout_constraintStart_toEndOf="@+id/imageViewA"
+        app:layout_constraintTop_toTopOf="@+id/imageViewA"
+        app:srcCompat="@drawable/ic_timer_black_24dp" />
+
+    <TextView
+        android:id="@+id/queueTimeA"
+        android:layout_width="75dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="Queue: 10min"
+        android:textSize="11sp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewAA"
+        app:layout_constraintStart_toEndOf="@+id/imageViewAA"
+        app:layout_constraintTop_toTopOf="@+id/imageViewAA" />
+
+    <TextView
+        android:id="@+id/chargTime"
+        android:layout_width="75dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="Charge: 10min"
+        android:textSize="11sp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView21"
+        app:layout_constraintStart_toEndOf="@+id/imageView21"
+        app:layout_constraintTop_toTopOf="@+id/imageView21" />
+
+    <ImageView
+        android:id="@+id/imageView21"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView11"
+        app:layout_constraintStart_toEndOf="@+id/textView11"
+        app:layout_constraintTop_toTopOf="@+id/textView11"
+        app:srcCompat="@drawable/ic_access_time_black_24dp" />
+
+    <ImageView
+        android:id="@+id/imageViewAAA"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="@+id/imageView14"
+        app:layout_constraintTop_toBottomOf="@+id/textView11"
+        app:srcCompat="@drawable/ic_ev_station_black_24dp" />
+
+    <TextView
+        android:id="@+id/textViewA"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="J1772"
+        android:textSize="12dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewAAA"
+        app:layout_constraintStart_toEndOf="@+id/imageViewAAA"
+        app:layout_constraintTop_toTopOf="@+id/imageViewAAA" />
+
+    <ImageView
+        android:id="@+id/imageViewA"
+        android:layout_width="40dp"
+        android:layout_height="17dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewA"
+        app:layout_constraintStart_toEndOf="@+id/textViewA"
+        app:layout_constraintTop_toTopOf="@+id/textViewA"
+        app:srcCompat="@drawable/stationbg" />
+
+    <ImageView
+        android:id="@+id/imageViewB"
+        android:layout_width="40dp"
+        android:layout_height="17dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewB"
+        app:layout_constraintStart_toEndOf="@+id/textViewB"
+        app:layout_constraintTop_toTopOf="@+id/textViewB"
+        app:srcCompat="@drawable/stationbg" />
+
+    <TextView
+        android:id="@+id/ChargeinputA"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2/2"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewA"
+        app:layout_constraintEnd_toEndOf="@+id/imageViewA"
+        app:layout_constraintStart_toStartOf="@+id/imageViewA"
+        app:layout_constraintTop_toTopOf="@+id/imageViewA" />
+
+    <TextView
+        android:id="@+id/ChargeInputB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2/2"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewB"
+        app:layout_constraintEnd_toEndOf="@+id/imageViewB"
+        app:layout_constraintStart_toStartOf="@+id/imageViewB"
+        app:layout_constraintTop_toTopOf="@+id/imageViewB" />
+
+    <TextView
+        android:id="@+id/ChargeInputC"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2/2"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewC"
+        app:layout_constraintEnd_toEndOf="@+id/imageViewC"
+        app:layout_constraintStart_toStartOf="@+id/imageViewC"
+        app:layout_constraintTop_toTopOf="@+id/imageViewC" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
