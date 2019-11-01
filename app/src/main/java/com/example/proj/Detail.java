@@ -95,6 +95,7 @@ public class Detail extends AppCompatActivity {
         processIntent();
         getDetail();
         setDetailsHeader();
+        setDetailBody();
     }
 
     private void processIntent() {
@@ -241,7 +242,7 @@ public class Detail extends AppCompatActivity {
     }
 
     private void setDetailBody(){
-
+        // TODO The logic for the body + buttons.
     }
 
     private String read(String httpUrl) {

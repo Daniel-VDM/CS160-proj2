@@ -71,9 +71,9 @@
 
     <TextView
         android:id="@+id/Title"
-        android:layout_width="308dp"
+        android:layout_width="wrap_content"
         android:layout_height="25dp"
-        android:layout_marginStart="18dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="11dp"
         android:fontFamily="sans-serif-black"
         android:text="ChargePoint Charging Station"
@@ -239,7 +239,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/Title"
         app:layout_constraintStart_toEndOf="@+id/Title"
         app:layout_constraintTop_toTopOf="@+id/Title"
-        app:layout_constraintVertical_bias="0.125"
+        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/open" />
 
     <ImageView
