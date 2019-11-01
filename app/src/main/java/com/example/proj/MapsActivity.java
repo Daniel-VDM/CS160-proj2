@@ -63,7 +63,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     Geocoder geocoder;
     MapView map;
     RecyclerView recyclerView;
-    private GoogleMap googleMap;
+    GoogleMap googleMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

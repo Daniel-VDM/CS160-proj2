@@ -3,6 +3,8 @@ package com.example.proj;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,18 +17,26 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -207,18 +217,35 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             holder.More.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent detail = new Intent(context, Detail.class);
-                    String serialCurrStation = null;
                     try {
-                        serialCurrStation = currStations.get(position).toString();
-                    } catch (JSONException e) {
+                        JSONObject currStation = currStations.getJSONObject(position);
+                        double lat = currStation.getJSONObject("geometry")
+                                .getJSONObject("location").getDouble("lat");
+                        double lng = currStation.getJSONObject("geometry")
+                                .getJSONObject("location").getDouble("lng");
+                        URL url = new URL("https://map.openchargemap.io/assets/images/" +
+                                "icons/branding/AppIcon_128x128.png");
+                        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                        connection.setDoInput(true);
+                        connection.connect();
+                        InputStream input = connection.getInputStream();
+                        Bitmap myBitmap = BitmapFactory.decodeStream(input);
+                        ((MapsActivity) context).googleMap.moveCamera(CameraUpdateFactory
+                                .newLatLng(new LatLng(lat, lng)));
+                        ((MapsActivity) context).googleMap.addMarker(new MarkerOptions()
+                                .position(new LatLng(lat, lng))
+                                .icon(BitmapDescriptorFactory.fromBitmap(myBitmap))
+                                .title(currStation.getString("name"))).showInfoWindow();
+                        Intent detail = new Intent(context, Detail.class);
+                        String serialCurrStation = currStations.get(position).toString();
+                        detail.putExtra("CAR", car);
+                        detail.putExtra("CURR_LONG", currloc.longitude);
+                        detail.putExtra("CURR_LAT", currloc.latitude);
+                        detail.putExtra("CURR_STATION", serialCurrStation);
+                        context.startActivity(detail);
+                    } catch (JSONException | IOException e) {
                         Log.e(TAG, e.toString());
                     }
-                    detail.putExtra("CAR", car);
-                    detail.putExtra("CURR_LONG", currloc.longitude);
-                    detail.putExtra("CURR_LAT", currloc.latitude);
-                    detail.putExtra("CURR_STATION", serialCurrStation);
-                    context.startActivity(detail);
                 }
             });
 
