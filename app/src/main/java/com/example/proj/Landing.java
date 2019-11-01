@@ -1,15 +1,10 @@
 package com.example.proj;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
-import android.os.CountDownTimer;
-import android.provider.CalendarContract;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -17,6 +12,8 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationRequest;
@@ -79,7 +76,7 @@ public class Landing extends AppCompatActivity implements OnMapReadyCallback {
         landingMap.getMapAsync(this);
     }
 
-    private void requestLocationUpdate(){
+    private void requestLocationUpdate() {
         FusedLocationProviderClient fusedLocationClient = new FusedLocationProviderClient(this);
         final LocationRequest locationRequest = new LocationRequest();
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
@@ -105,7 +102,7 @@ public class Landing extends AppCompatActivity implements OnMapReadyCallback {
         searchBuotton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (carSelected == null){
+                if (carSelected == null) {
                     Toast toast = Toast.makeText(getApplicationContext(),
                             "Please select a car",
                             Toast.LENGTH_SHORT);

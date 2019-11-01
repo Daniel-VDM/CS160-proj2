@@ -1,7 +1,5 @@
 package com.example.proj;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -13,6 +11,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -182,9 +182,9 @@ public class Detail extends AppCompatActivity {
     }
 
     @SuppressLint("SetTextI18n")
-    private void setDetailsHeader(){
+    private void setDetailsHeader() {
         try {
-            if (jsonObjectSearch.has("photos")){
+            if (jsonObjectSearch.has("photos")) {
                 JSONObject photoObject = (JSONObject) jsonObjectSearch
                         .getJSONArray("photos").get(0);
                 String photoRef = photoObject.getString("photo_reference");
@@ -204,11 +204,11 @@ public class Detail extends AppCompatActivity {
 
             Title.setText(jsonObjectDetail.getString("name"));
             addressDetail.setText(jsonObjectDetail.getString("formatted_address"));
-            if (jsonObjectSearch.has("opening_hours")){
-                if (jsonObjectSearch.getJSONObject("opening_hours").getBoolean("open_now")){
-                   openDetail.setAlpha(1.0f);
-                   closeDetail.setAlpha(0.0f);
-                   openMaybeDetail.setAlpha(0.0f);
+            if (jsonObjectSearch.has("opening_hours")) {
+                if (jsonObjectSearch.getJSONObject("opening_hours").getBoolean("open_now")) {
+                    openDetail.setAlpha(1.0f);
+                    closeDetail.setAlpha(0.0f);
+                    openMaybeDetail.setAlpha(0.0f);
                 } else {
                     openDetail.setAlpha(0.0f);
                     closeDetail.setAlpha(1.0f);
@@ -226,8 +226,8 @@ public class Detail extends AppCompatActivity {
             int ratingCount = jsonObjectSearch.has("user_ratings_total") ?
                     jsonObjectSearch.getInt("user_ratings_total") : 0;
             rating.setText(ratingVal + "");
-            for (int i = 0; i < 5; i ++){
-                if (i < ratingVal){
+            for (int i = 0; i < 5; i++) {
+                if (i < ratingVal) {
                     ImageView full = StarFull.get(i);
                     ImageView half = StarHalf.get(i);
                     full.setAlpha(1.0f);
@@ -241,13 +241,13 @@ public class Detail extends AppCompatActivity {
             }
             ratingCountDetail.setText(ratingCount + " reviews");
 
-            int pricePerKwh = (int)(jsonObjectSearch.getDouble("price-per-kWh") * 100);
+            int pricePerKwh = (int) (jsonObjectSearch.getDouble("price-per-kWh") * 100);
             priceDetail.setText(pricePerKwh + " Cents per kWh");
-            if (8 <= pricePerKwh && pricePerKwh <= 10.66){  // Hardcoded random prices
+            if (8 <= pricePerKwh && pricePerKwh <= 10.66) {  // Hardcoded random prices
                 PriceRating.get(0).setAlpha(1.0f);
                 PriceRating.get(1).setAlpha(0.2f);
                 PriceRating.get(2).setAlpha(0.2f);
-            } else if (10.66 <= pricePerKwh && pricePerKwh <= 13.33){
+            } else if (10.66 <= pricePerKwh && pricePerKwh <= 13.33) {
                 PriceRating.get(0).setAlpha(1.0f);
                 PriceRating.get(1).setAlpha(1.0f);
                 PriceRating.get(2).setAlpha(0.2f);
@@ -258,62 +258,62 @@ public class Detail extends AppCompatActivity {
             }
 
             double dist = jsonObjectSearch.getDouble("distance");
-            switch (carSelected){
+            switch (carSelected) {
                 case "model3":
-                    if (dist > RecyclerViewAdapter.currModel3Range){
+                    if (dist > RecyclerViewAdapter.currModel3Range) {
                         driveDetail.setText("Out of range");
                         return;
                     }
                 case "modelS":
-                    if (dist > RecyclerViewAdapter.currModelSRange){
+                    if (dist > RecyclerViewAdapter.currModelSRange) {
                         driveDetail.setText("Out of range");
                         return;
                     }
                 case "i3":
-                    if (dist > RecyclerViewAdapter.curri3Range){
+                    if (dist > RecyclerViewAdapter.curri3Range) {
                         driveDetail.setText("Out of range");
                         return;
                     }
             }
-            double etaINHr = Math.max(new BigDecimal( dist / 25)
+            double etaINHr = Math.max(new BigDecimal(dist / 25)
                     .setScale(2, RoundingMode.HALF_UP).doubleValue(), 0.02);
-            if (etaINHr > 1){
+            if (etaINHr > 1) {
                 if (etaINHr >= 2) {
                     driveDetail.setText("ETA: " + etaINHr + " hrs");
                 } else {
                     driveDetail.setText("ETA: " + etaINHr + " hr");
                 }
             } else {
-                double val = new BigDecimal( etaINHr * 60)
+                double val = new BigDecimal(etaINHr * 60)
                         .setScale(2, RoundingMode.HALF_UP).doubleValue();
                 driveDetail.setText("ETA: " + val + " mins");
             }
 
-        } catch (JSONException | IOException e){
+        } catch (JSONException | IOException e) {
             Log.e(TAG, e.toString());
         }
     }
 
     @SuppressLint("SetTextI18n")
-    private void setDetailsBody(){
+    private void setDetailsBody() {
         try {
-            Random rand= new Random();
-            if (jsonObjectDetail.has("international_phone_number")){
+            Random rand = new Random();
+            if (jsonObjectDetail.has("international_phone_number")) {
                 phoneNumber.setText(jsonObjectDetail.getString("international_phone_number"));
-            } else if (jsonObjectDetail.has("formatted_phone_number")){
+            } else if (jsonObjectDetail.has("formatted_phone_number")) {
                 phoneNumber.setText(jsonObjectDetail.getString("formatted_phone_number"));
             } else {
                 phoneNumber.setText("Unknown Phone Number");
             }
 
-            if (jsonObjectDetail.has("website")){
+            if (jsonObjectDetail.has("website")) {
                 buttonUrl = jsonObjectDetail.getString("website");
                 link.setText(buttonUrl);
             } else {
                 link.setText("Unknown Website");
             }
 
-            if (jsonObjectSearch.getString("name").contains("Tesla")){
+            if (jsonObjectSearch.getString("name").contains("Tesla")) {
                 imageViewBBB.setAlpha(0.0f);
                 imageViewCCC.setAlpha(0.0f);
                 imageViewBB.setAlpha(0.0f);
@@ -327,40 +327,40 @@ public class Detail extends AppCompatActivity {
                 ChargeinputB.setAlpha(0.0f);
                 ChargeinputC.setAlpha(0.0f);
                 textViewA.setText("Supercharger");
-                if (Math.random() > 0.5){
-                    int curr = (int)(10.0 * Math.random() + 1);
+                if (Math.random() > 0.5) {
+                    int curr = (int) (10.0 * Math.random() + 1);
                     ChargeinputA.setText(curr + "/11");
                     queueTimeA.setText("No Queue!");
                 } else {
-                    int queue = (int)(rand.nextDouble() * 60);
+                    int queue = (int) (rand.nextDouble() * 60);
                     ChargeinputA.setText("0/11");
                     queueTimeA.setText("Queue: " + queue + "min");
                 }
             } else {
                 if (Math.random() > 0.5) {
-                    int curr = (int)(5 * rand.nextDouble()) + 1;
+                    int curr = (int) (5 * rand.nextDouble()) + 1;
                     ChargeinputA.setText(curr + "/6");
                     queueTimeA.setText("No Queue!");
                 } else {
-                    int queue = (int)(rand.nextDouble() * 60);
+                    int queue = (int) (rand.nextDouble() * 60);
                     ChargeinputA.setText("0/6");
                     queueTimeA.setText("Queue: " + queue + "min");
                 }
                 if (Math.random() > 0.5) {
-                    int curr = (int)(6 * rand.nextDouble() + 1);
+                    int curr = (int) (6 * rand.nextDouble() + 1);
                     ChargeinputB.setText(curr + "/7");
                     queueTimeB.setText("No Queue!");
                 } else {
-                    int queue = (int)(rand.nextDouble() * 60);
+                    int queue = (int) (rand.nextDouble() * 60);
                     ChargeinputB.setText("0/7");
                     queueTimeB.setText("Queue: " + queue + "min");
                 }
-                if (Math.random() > 0.5){
-                    int curr = (int)(10.0 * Math.random() + 1);
+                if (Math.random() > 0.5) {
+                    int curr = (int) (10.0 * Math.random() + 1);
                     ChargeinputC.setText(curr + "/11");
                     queueTimeC.setText("No Queue!");
                 } else {
-                    int queue = (int)(rand.nextDouble() * 60);
+                    int queue = (int) (rand.nextDouble() * 60);
                     ChargeinputC.setText("0/11");
                     queueTimeC.setText("Queue: " + queue + "min");
                 }
@@ -368,19 +368,19 @@ public class Detail extends AppCompatActivity {
 
             int rangePerHr = jsonObjectSearch.getInt("range-per-hr-i3");
             double leftRange = RecyclerViewAdapter.Model3Range - RecyclerViewAdapter.currModel3Range;
-            double timeLeft = new BigDecimal( leftRange / rangePerHr)
+            double timeLeft = new BigDecimal(leftRange / rangePerHr)
                     .setScale(2, RoundingMode.HALF_UP).doubleValue();
-            if (timeLeft > 1){
+            if (timeLeft > 1) {
                 chargeTime.setText("Charge: " + timeLeft + " hrs");
             } else {
-                chargeTime.setText("Charge: " + timeLeft*60 + " mins");
+                chargeTime.setText("Charge: " + timeLeft * 60 + " mins");
             }
-        } catch (JSONException e){
+        } catch (JSONException e) {
             Log.e(TAG, e.toString());
         }
     }
 
-    private void setNextPageListeners(){
+    private void setNextPageListeners() {
         reviewButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -394,7 +394,7 @@ public class Detail extends AppCompatActivity {
         link.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (buttonUrl != null){
+                if (buttonUrl != null) {
                     Uri uri = Uri.parse(buttonUrl);
                     Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                     startActivity(intent);
@@ -409,7 +409,7 @@ public class Detail extends AppCompatActivity {
                     Uri uri = Uri.parse(jsonObjectDetail.getString("url"));
                     Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                     startActivity(intent);
-                } catch (JSONException ignore){
+                } catch (JSONException ignore) {
                 }
             }
         });
@@ -426,7 +426,7 @@ public class Detail extends AppCompatActivity {
                     Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
                     mapIntent.setPackage("com.google.android.apps.maps");
                     startActivity(mapIntent);
-                } catch (JSONException ignore){
+                } catch (JSONException ignore) {
                 }
             }
         });

@@ -1,7 +1,5 @@
 package com.example.proj;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,7 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.google.android.gms.maps.model.LatLng;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONException;
@@ -18,11 +17,11 @@ import org.json.JSONObject;
 
 public class Review extends AppCompatActivity {
 
-    private JSONObject jsonObject;
     TextView NameReview;
     TextView AddressReview;
     Button Submit;
     FloatingActionButton floatingActionButton2;
+    private JSONObject jsonObject;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +38,7 @@ public class Review extends AppCompatActivity {
         setNextPageListeners();
     }
 
-    private void setNextPageListeners(){
+    private void setNextPageListeners() {
         Submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -60,7 +59,7 @@ public class Review extends AppCompatActivity {
     }
 
     @SuppressLint("SetTextI18n")
-    private void updateInfo(){
+    private void updateInfo() {
         try {
             NameReview.setText(jsonObject.getString("name"));
             AddressReview.setText(jsonObject.getString("formatted_address"));

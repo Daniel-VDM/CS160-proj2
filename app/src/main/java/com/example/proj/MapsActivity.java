@@ -1,9 +1,5 @@
 package com.example.proj;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -11,7 +7,6 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.StrictMode;
@@ -22,6 +17,10 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -39,8 +38,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
@@ -53,6 +50,9 @@ import java.util.Random;
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     static String key = "AIzaSyCtNO_y0trt6tjgP8ApsdGIm1IK4rjZFeQ";
+
+    // TODO: on marker click, update the recycle view (More involved, requires keeping track
+    //  of markers AND setting click listeners to tie back to recycler view)
 
     JSONArray currStations;
 
@@ -113,7 +113,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     private void setLookLoc() {
-        if (zipcode.equals("")){
+        if (zipcode.equals("")) {
             lookLoc = currLoc;
         } else {
             try {
@@ -188,7 +188,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         return httpData;
     }
 
-    private void updateLocations(){
+    private void updateLocations() {
         StringBuilder googlePlacesUrl = new StringBuilder("https://maps.googleapis.com/" +
                 "maps/api/place/nearbysearch/json?")
                 .append("location=").append(lookLoc.latitude).append(",").append(lookLoc.longitude)
@@ -199,16 +199,16 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         try {
             JSONObject jsonObject = new JSONObject(response);
             Random r = new Random();
-            while (jsonObject.has("next_page_token")){
+            while (jsonObject.has("next_page_token")) {
                 String nextPageToken = (String) jsonObject.get("next_page_token");
                 JSONArray results = (JSONArray) jsonObject.get("results");
-                for (int i = 0; i < results.length(); i++){
+                for (int i = 0; i < results.length(); i++) {
                     // Add data for each station here
-                    JSONObject station = (JSONObject)results.get(i);
-                    double pricePerKwh = 0.08 + (0.16-0.08) * r.nextDouble();
+                    JSONObject station = (JSONObject) results.get(i);
+                    double pricePerKwh = 0.08 + (0.16 - 0.08) * r.nextDouble();
                     station.put("price-per-kWh", pricePerKwh);
-                    if(station.has("name")
-                            && station.get("name").toString().contains("Tesla")){
+                    if (station.has("name")
+                            && station.get("name").toString().contains("Tesla")) {
                         station.put("range-per-hr-model3", 200);
                         station.put("range-per-hr-modelS", 160);
                         station.put("range-per-hr-i3", 216);
@@ -230,19 +230,19 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         .append("&key=").append(key);
                 response = read(googlePlacesUrl.toString());
                 jsonObject = new JSONObject(response);
-                while (jsonObject.getString("status").equals("INVALID_REQUEST")){
+                while (jsonObject.getString("status").equals("INVALID_REQUEST")) {
                     response = read(googlePlacesUrl.toString());
                     jsonObject = new JSONObject(response);
                 }
             }
             JSONArray results = (JSONArray) jsonObject.get("results");
-            for (int i = 0; i < results.length(); i++){
+            for (int i = 0; i < results.length(); i++) {
                 // Add data for each station here
-                JSONObject station = (JSONObject)results.get(i);
-                double pricePerKwh = 0.08 + (0.16-0.08) * r.nextDouble();
+                JSONObject station = (JSONObject) results.get(i);
+                double pricePerKwh = 0.08 + (0.16 - 0.08) * r.nextDouble();
                 station.put("price-per-kWh", pricePerKwh);
-                if(station.has("name")
-                        && station.get("name").toString().contains("Tesla")){
+                if (station.has("name")
+                        && station.get("name").toString().contains("Tesla")) {
                     station.put("range-per-hr-model3", 200);
                     station.put("range-per-hr-modelS", 160);
                     station.put("range-per-hr-i3", 216);
@@ -264,13 +264,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         sortStationByDist();
     }
 
-    private double calcDistance(double lat, double lng){
+    private double calcDistance(double lat, double lng) {
         float[] results = new float[1];
         Location.distanceBetween(currLoc.latitude, currLoc.longitude, lat, lng, results);
         return results[0] * 0.000621371;
     }
 
-    private void sortStationByDist(){
+    private void sortStationByDist() {
         JSONArray sortedJsonArray = new JSONArray();
 
         List<JSONObject> jsonValues = new ArrayList<>();
@@ -281,7 +281,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         }
 
-        Collections.sort( jsonValues, new Comparator<JSONObject>() {
+        Collections.sort(jsonValues, new Comparator<JSONObject>() {
             @Override
             public int compare(JSONObject a, JSONObject b) {
                 double A = 0;
@@ -289,8 +289,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 try {
                     A = a.getDouble("distance");
                     B = b.getDouble("distance");
-                }
-                catch (JSONException ignore) {
+                } catch (JSONException ignore) {
                 }
                 return Double.compare(A, B);
             }
@@ -302,8 +301,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         currStations = sortedJsonArray;
     }
 
-    private void updateStations(){
-        for(int i = 0; i < currStations.length(); i++){
+    private void updateStations() {
+        for (int i = 0; i < currStations.length(); i++) {
             try {
                 JSONObject station = (JSONObject) currStations.get(i);
                 JSONObject geo = (JSONObject) station.get("geometry");
@@ -311,7 +310,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 double lat = (double) location.get("lat");
                 double lng = (double) location.get("lng");
                 String name = "Charging Station";
-                if (station.has("name")){
+                if (station.has("name")) {
                     name = station.getString("name");
                 }
                 URL url = new URL("https://map.openchargemap.io/assets/images/icons/branding/AppIcon_128x128.png");
@@ -329,7 +328,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
     }
 
-    private void updateRecyler(){
+    private void updateRecyler() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this,
                 LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(layoutManager);
@@ -347,7 +346,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     protected void onStart() {
         super.onStart();
-        if (startup){
+        if (startup) {
             startup = false;
             update();
         }
