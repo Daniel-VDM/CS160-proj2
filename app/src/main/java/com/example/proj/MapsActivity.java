@@ -12,6 +12,8 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
+import android.os.Looper;
 import android.os.StrictMode;
 import android.util.Log;
 import android.view.Gravity;
@@ -65,6 +67,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     RecyclerView recyclerView;
     GoogleMap googleMap;
 
+    boolean startup;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,6 +82,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         searchButton = findViewById(R.id.maps_searchButton);
         zipcodeInput = findViewById(R.id.maps_zipcode);
         recyclerView = findViewById(R.id.map_Recyler);
+        currStations = new JSONArray();
+        startup = true;
         map.onCreate(savedInstanceState);
 
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
@@ -87,23 +93,14 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public void onClick(View view) {
                 zipcode = zipcodeInput.getText().toString();
-                Toast toast = Toast.makeText(getApplicationContext(),
-                        "Searching for charging stations!",
-                        Toast.LENGTH_LONG);
-                toast.setGravity(Gravity.BOTTOM, 0, 850);
-                toast.show();
-                new CountDownTimer(50, 0) {
-                    public void onTick(long millisUntilFinished) {
-                    }
-                    public void onFinish() {
-                        update();
-                    }
-                }.start();
+                setLookLoc();
+                update();
             }
         });
 
         processIntent();
-        update();
+        setLookLoc();
+        map.getMapAsync(this);
     }
 
     private void processIntent() {
@@ -115,7 +112,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         currLoc = new LatLng(lat, lng);
     }
 
-    private void update(){
+    private void setLookLoc() {
         if (zipcode.equals("")){
             lookLoc = currLoc;
         } else {
@@ -132,9 +129,32 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 lookLoc = currLoc;
             }
         }
-        updateLocations();
-        updateRecyler();
-        map.getMapAsync(this);
+    }
+
+    private void update() {
+        Toast toast = Toast.makeText(getApplicationContext(),
+                "Searching for charging stations!",
+                Toast.LENGTH_LONG);
+        toast.setGravity(Gravity.BOTTOM, 0, 850);
+        toast.show();
+        new Thread(new Runnable() {
+            public void run() {
+                updateLocations();
+                new Handler(Looper.getMainLooper()).post(new Runnable() {
+                    @Override
+                    public void run() {
+                        map.getMapAsync(new OnMapReadyCallback() {
+                            @Override
+                            public void onMapReady(GoogleMap googleMap) {
+                                googleMap.moveCamera(CameraUpdateFactory.newLatLng(lookLoc));
+                                updateStations();
+                            }
+                        });
+                        updateRecyler();
+                    }
+                });
+            }
+        }).start();
     }
 
     private String read(String httpUrl) {
@@ -179,7 +199,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         try {
             JSONObject jsonObject = new JSONObject(response);
             Random r = new Random();
-            currStations = new JSONArray();
             while (jsonObject.has("next_page_token")){
                 String nextPageToken = (String) jsonObject.get("next_page_token");
                 JSONArray results = (JSONArray) jsonObject.get("results");
@@ -283,6 +302,33 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         currStations = sortedJsonArray;
     }
 
+    private void updateStations(){
+        for(int i = 0; i < currStations.length(); i++){
+            try {
+                JSONObject station = (JSONObject) currStations.get(i);
+                JSONObject geo = (JSONObject) station.get("geometry");
+                JSONObject location = (JSONObject) geo.get("location");
+                double lat = (double) location.get("lat");
+                double lng = (double) location.get("lng");
+                String name = "Charging Station";
+                if (station.has("name")){
+                    name = station.getString("name");
+                }
+                URL url = new URL("https://map.openchargemap.io/assets/images/icons/branding/AppIcon_128x128.png");
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setDoInput(true);
+                connection.connect();
+                InputStream input = connection.getInputStream();
+                Bitmap myBitmap = BitmapFactory.decodeStream(input);
+                googleMap.addMarker(new MarkerOptions()
+                        .position(new LatLng(lat, lng))
+                        .icon(BitmapDescriptorFactory.fromBitmap(myBitmap))
+                        .title(name));
+            } catch (JSONException | IOException ignored) {
+            }
+        }
+    }
+
     private void updateRecyler(){
         LinearLayoutManager layoutManager = new LinearLayoutManager(this,
                 LinearLayoutManager.HORIZONTAL, false);
@@ -301,6 +347,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     protected void onStart() {
         super.onStart();
+        if (startup){
+            startup = false;
+            update();
+        }
     }
 
     @Override
@@ -337,31 +387,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
                 .title("You are here!"));
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(lookLoc));
-
-        for(int i = 0; i < currStations.length(); i++){
-            try {
-                JSONObject station = (JSONObject) currStations.get(i);
-                JSONObject geo = (JSONObject) station.get("geometry");
-                JSONObject location = (JSONObject) geo.get("location");
-                double lat = (double) location.get("lat");
-                double lng = (double) location.get("lng");
-                String name = "Charging Station";
-                if (station.has("name")){
-                    name = station.getString("name");
-                }
-                URL url = new URL("https://map.openchargemap.io/assets/images/icons/branding/AppIcon_128x128.png");
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                connection.setDoInput(true);
-                connection.connect();
-                InputStream input = connection.getInputStream();
-                Bitmap myBitmap = BitmapFactory.decodeStream(input);
-                googleMap.addMarker(new MarkerOptions()
-                        .position(new LatLng(lat, lng))
-                        .icon(BitmapDescriptorFactory.fromBitmap(myBitmap))
-                        .title(name));
-            } catch (JSONException | IOException ignored) {
-            }
-        }
     }
 
 }

@@ -112,26 +112,13 @@ public class Landing extends AppCompatActivity implements OnMapReadyCallback {
                     toast.setGravity(Gravity.TOP, 0, 25);
                     toast.show();
                 } else {
-                    Toast toast = Toast.makeText(getApplicationContext(),
-                            "Searching for charging stations!",
-                            Toast.LENGTH_LONG);
-                    toast.setGravity(Gravity.BOTTOM, 0, 100);
-                    toast.show();
-
-                   new CountDownTimer(50, 0) {
-                        public void onTick(long millisUntilFinished) {
-                        }
-                        public void onFinish() {
-                            searchBuotton.setAlpha(0.0f);
-                            Intent mapActivity = new Intent(Landing.this, MapsActivity.class);
-                            String zipCode = zipcodeInput.getText().toString();
-                            mapActivity.putExtra("CAR", carSelected);
-                            mapActivity.putExtra("CURR_LONG", currLoc.longitude);
-                            mapActivity.putExtra("CURR_LAT", currLoc.latitude);
-                            mapActivity.putExtra("TARGET_ZIP", zipCode);
-                            startActivity(mapActivity);
-                        }
-                    }.start();
+                    Intent mapActivity = new Intent(Landing.this, MapsActivity.class);
+                    String zipCode = zipcodeInput.getText().toString();
+                    mapActivity.putExtra("CAR", carSelected);
+                    mapActivity.putExtra("CURR_LONG", currLoc.longitude);
+                    mapActivity.putExtra("CURR_LAT", currLoc.latitude);
+                    mapActivity.putExtra("TARGET_ZIP", zipCode);
+                    startActivity(mapActivity);
                 }
             }
         });
