@@ -40,7 +40,7 @@ import java.util.Objects;
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>{
 
     private static final String TAG = "ADAPTER LOG";
-//    private final double chargePercentage = Math.random();
+//    static final double chargePercentage = Math.random();
     static final double chargePercentage = 0.03;
     static final double Model3Range = 260;
     static final double ModelSRange = 300;
