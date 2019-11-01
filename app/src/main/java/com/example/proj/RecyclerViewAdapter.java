@@ -225,7 +225,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                         connection.connect();
                         InputStream input = connection.getInputStream();
                         Bitmap myBitmap = BitmapFactory.decodeStream(input);
-                        ((MapsActivity) context).googleMap.moveCamera(CameraUpdateFactory
+                        ((MapsActivity) context).googleMap.animateCamera(CameraUpdateFactory
                                 .newLatLng(new LatLng(lat, lng)));
                         ((MapsActivity) context).googleMap.addMarker(new MarkerOptions()
                                 .position(new LatLng(lat, lng))

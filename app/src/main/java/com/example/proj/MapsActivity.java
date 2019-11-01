@@ -28,6 +28,7 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.json.JSONArray;
@@ -43,6 +44,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
@@ -66,6 +68,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     MapView map;
     RecyclerView recyclerView;
     GoogleMap googleMap;
+    RecyclerView.LayoutManager layoutManager;
+    HashMap<LatLng, Integer> indexMap;
 
     boolean startup;
 
@@ -85,9 +89,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         currStations = new JSONArray();
         startup = true;
         map.onCreate(savedInstanceState);
+        indexMap = new HashMap<>();
 
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
+        layoutManager = new LinearLayoutManager(this,
+                LinearLayoutManager.HORIZONTAL, false);
+        recyclerView.setLayoutManager(layoutManager);
 
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -146,7 +154,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         map.getMapAsync(new OnMapReadyCallback() {
                             @Override
                             public void onMapReady(GoogleMap googleMap) {
-                                googleMap.moveCamera(CameraUpdateFactory.newLatLng(lookLoc));
+                                googleMap.animateCamera(CameraUpdateFactory.newLatLng(lookLoc));
                                 updateStations();
                             }
                         });
@@ -296,7 +304,18 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         });
 
         for (int i = 0; i < currStations.length(); i++) {
-            sortedJsonArray.put(jsonValues.get(i));
+            try {
+                JSONObject jsonObject = jsonValues.get(i);
+                sortedJsonArray.put(jsonObject);
+                double lat = jsonObject.getJSONObject("geometry")
+                        .getJSONObject("location").getDouble("lat");
+                double lng = jsonObject.getJSONObject("geometry")
+                        .getJSONObject("location").getDouble("lng");
+                LatLng position = new LatLng(lat, lng);
+                indexMap.put(position, i);
+            } catch (JSONException e){
+                Log.e("Maps", e.toString());
+            }
         }
         currStations = sortedJsonArray;
     }
@@ -305,10 +324,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         for (int i = 0; i < currStations.length(); i++) {
             try {
                 JSONObject station = (JSONObject) currStations.get(i);
-                JSONObject geo = (JSONObject) station.get("geometry");
-                JSONObject location = (JSONObject) geo.get("location");
-                double lat = (double) location.get("lat");
-                double lng = (double) location.get("lng");
+                double lat = station.getJSONObject("geometry")
+                        .getJSONObject("location").getDouble("lat");
+                double lng = station.getJSONObject("geometry")
+                        .getJSONObject("location").getDouble("lng");
                 String name = "Charging Station";
                 if (station.has("name")) {
                     name = station.getString("name");
@@ -329,9 +348,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     private void updateRecyler() {
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this,
-                LinearLayoutManager.HORIZONTAL, false);
-        recyclerView.setLayoutManager(layoutManager);
         RecyclerViewAdapter adapter =
                 new RecyclerViewAdapter(this, currStations, currLoc, carSelected);
         recyclerView.setAdapter(adapter);
@@ -377,7 +393,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     @Override
-    public void onMapReady(GoogleMap googleMap) {
+    public void onMapReady(final GoogleMap googleMap) {
         this.googleMap = googleMap;
         googleMap.setMinZoomPreference(12);
         googleMap.clear();
@@ -385,6 +401,24 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 .position(currLoc)
                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
                 .title("You are here!"));
+        googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                LatLng pos = marker.getPosition();
+                if (!marker.getTitle().equals("You are here!")) {
+                    final int index = indexMap.get(pos);
+                    new Handler().post(new Runnable() {
+                        @Override
+                        public void run() {
+                            recyclerView.smoothScrollToPosition(index);
+                        }
+                    });
+                }
+                marker.showInfoWindow();
+                googleMap.animateCamera(CameraUpdateFactory.newLatLng(pos));
+                return true;
+            }
+        });
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(lookLoc));
     }
 
