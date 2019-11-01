@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="2165 Kittredge St, Berkeley, CA 94704"
-        android:textSize="18sp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="@+id/NameReview"
         app:layout_constraintStart_toStartOf="@+id/NameReview"
         app:layout_constraintTop_toBottomOf="@+id/NameReview" />
