@@ -36,13 +36,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     private static final String TAG = "ADAPTER LOG";
 //    private final double chargePercentage = Math.random();
-    private final double chargePercentage = 0.03;
-    private final double Model3Range = 260;
-    private final double ModelSRange = 300;
-    private final double i3Range = 190;
-    private final double currModel3Range = chargePercentage * Model3Range;
-    private final double currModelSRange = chargePercentage * ModelSRange;
-    private final double curri3Range = chargePercentage * i3Range;
+    static final double chargePercentage = 0.03;
+    static final double Model3Range = 260;
+    static final double ModelSRange = 300;
+    static final double i3Range = 190;
+    static final double currModel3Range = chargePercentage * Model3Range;
+    static final double currModelSRange = chargePercentage * ModelSRange;
+    static final double curri3Range = chargePercentage * i3Range;
 
     private JSONArray currStations;
     private Context context;

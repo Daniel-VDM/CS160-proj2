@@ -204,6 +204,23 @@ public class Detail extends AppCompatActivity {
             }
 
             double dist = jsonObjectSearch.getDouble("distance");
+            switch (carSelected){
+                case "model3":
+                    if (dist > RecyclerViewAdapter.currModel3Range){
+                        driveDetail.setText("Out of range");
+                        return;
+                    }
+                case "modelS":
+                    if (dist > RecyclerViewAdapter.currModelSRange){
+                        driveDetail.setText("Out of range");
+                        return;
+                    }
+                case "i3":
+                    if (dist > RecyclerViewAdapter.curri3Range){
+                        driveDetail.setText("Out of range");
+                        return;
+                    }
+            }
             double etaINHr = Math.max(new BigDecimal( dist / 25)
                     .setScale(2, RoundingMode.HALF_UP).doubleValue(), 0.02);
             if (etaINHr > 1){
