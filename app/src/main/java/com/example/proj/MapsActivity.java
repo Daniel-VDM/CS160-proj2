@@ -230,7 +230,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     double lng = station.getJSONObject("geometry")
                             .getJSONObject("location").getDouble("lng");
                     station.put("distance", calcDistance(lat, lng));
-                    currStations.put(station);
+                    if (!indexMap.containsKey(new LatLng(lat, lng))){
+                        currStations.put(station);
+                    }
                 }
                 googlePlacesUrl = new StringBuilder("https://maps.googleapis.com/" +
                         "maps/api/place/nearbysearch/json?")
@@ -264,7 +266,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 double lng = station.getJSONObject("geometry")
                         .getJSONObject("location").getDouble("lng");
                 station.put("distance", calcDistance(lat, lng));
-                currStations.put(station);
+                if (!indexMap.containsKey(new LatLng(lat, lng))){
+                    currStations.put(station);
+                }
             }
         } catch (JSONException e) {
             e.printStackTrace();
