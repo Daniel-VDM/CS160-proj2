@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.StrictMode;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -241,6 +242,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 response = read(googlePlacesUrl.toString());
                 jsonObject = new JSONObject(response);
                 while (jsonObject.getString("status").equals("INVALID_REQUEST")) {
+                    SystemClock.sleep(2000);
                     response = read(googlePlacesUrl.toString());
                     jsonObject = new JSONObject(response);
                 }
