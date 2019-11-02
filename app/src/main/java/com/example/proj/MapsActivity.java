@@ -52,7 +52,7 @@ import java.util.Random;
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
-    static String key = "AIzaSyCtNO_y0trt6tjgP8ApsdGIm1IK4rjZFeQ";
+    static String key = "AIzaSyBlUGkGKaj_XuCkQtBYSOuDudhi1UGNuAw";
 
     // TODO: on marker click, update the recycle view (More involved, requires keeping track
     //  of markers AND setting click listeners to tie back to recycler view)

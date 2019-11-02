@@ -171,7 +171,9 @@ public class Detail extends AppCompatActivity {
         try {
             StringBuilder googlePlacesUrl = new StringBuilder("https://maps.googleapis.com/" +
                     "maps/api/place/details/json?")
-                    .append("place_id=").append(placeId)
+                    .append("&fields=geometry,name,rating,formatted_phone_number," +
+                            "formatted_address,international_phone_number,website")
+                    .append("&place_id=").append(placeId)
                     .append("&key=").append(MapsActivity.key);
             String response = read(googlePlacesUrl.toString());
             JSONObject responseObject = new JSONObject(response);
@@ -202,7 +204,7 @@ public class Detail extends AppCompatActivity {
                 imageViewDetail.setImageBitmap(myBitmap);
             }
 
-            Title.setText(jsonObjectDetail.getString("name"));
+            Title.setText(jsonObjectSearch.getString("name"));
             addressDetail.setText(jsonObjectDetail.getString("formatted_address"));
             if (jsonObjectSearch.has("opening_hours")) {
                 if (jsonObjectSearch.getJSONObject("opening_hours").getBoolean("open_now")) {
