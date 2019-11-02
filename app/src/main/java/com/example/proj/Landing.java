@@ -198,7 +198,7 @@ public class Landing extends AppCompatActivity implements OnMapReadyCallback {
         googleMap.addMarker(new MarkerOptions()
                 .position(currLoc)
                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
-                .title("You are here!"));
+                .title("You are here!")).showInfoWindow();
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(currLoc));
     }
 }
